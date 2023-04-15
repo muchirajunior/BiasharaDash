@@ -1,5 +1,7 @@
 from flask import Blueprint, render_template,request,redirect,flash
 from flask_login import login_user, logout_user
+from models.business import Business
+from models.cartegory import Cartegory
 from models.user import User,db
 from main import bcrypt
 users=Blueprint("users",__name__,url_prefix="/user",template_folder="../templates/user")
@@ -32,25 +34,35 @@ def login():
 
 @users.route('/register',methods=['POST','GET'])
 def register():
+    cartegories=Cartegory.query.all()
     try:
         if request.method=="POST":
+            print("register user")
+            #user
             name=request.form["name"]
-            username=request.form["username"]
+            email=request.form["email"]
             password=request.form["password"]
+            repeat_password=request.form["repeat_password"]
+
+            if(password!=repeat_password):
+                flash("password missmatch")
+                return render_template('register.html',cartegories=cartegories)
+            
             password=bcrypt.generate_password_hash(password,10).decode('utf-8')
 
-            user=User(name,username,password)
+            user=User(name,email,password)
             db.session.add(user)
             db.session.commit()
 
             login_user(user)
 
             return redirect("/")
-    except:
-        flash("error occured, could be invalid username/email")
-        return render_template('register.html')
+    except Exception as error:
+        print(error)
+        flash(str(error.args))
+        return render_template('register.html',cartegories=cartegories)
 
-    return render_template('register.html')
+    return render_template('register.html',cartegories=cartegories)
 
 @users.route("/restricted")
 def restricted():

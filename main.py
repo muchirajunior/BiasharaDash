@@ -15,4 +15,4 @@ db=SQLAlchemy(app)
 bcrypt=Bcrypt(app)
 migrate=Migrate(app,db)
 
-app.permanent_session_lifetime=timedelta(minutes=5) #user session lifetime
+app.permanent_session_lifetime=timedelta(minutes=50) #user session lifetime

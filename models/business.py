@@ -23,10 +23,9 @@ class Business(db.Model):
     items=db.relationship("Item",backref='businesses',lazy=True)
     orders=db.relationship("Order",backref='businesses',lazy=True)
 
-    def __init__(self,name,username,address,cartegory,phone,password):
+    def __init__(self,name,username,address,cartegory,phone):
         self.name=name
         self.username=username
         self.address=address
         self.cartegory=cartegory
         self.phone=phone
-        self.password=password

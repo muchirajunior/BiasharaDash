@@ -21,6 +21,7 @@
         </ul>
 
         {% if current_user.is_authenticated %}
+        <span>  </span>
         <span class="text-muted fw-semibold m-2">{{current_user.name}}</span>
         <a href="{{url_for('users.logout')}}" class="btn btn-secondary m-1 rounded-pill">logout</a>
         {% else %}

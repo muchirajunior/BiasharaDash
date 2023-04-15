@@ -2,31 +2,37 @@
 
 {% block body %}
 <form class="card mx-auto p-2 mt-5" style="max-width: 40rem;" method="POST">
-  <h3 class="text-center">Sign Up</h3>
-    <div class="mb-3">
-      <label  class="form-label">Name</label>
-      <input type="text" name="name" class="form-control" required maxlength="50" minlength="4"/>
-    </div>
-    <div class="mb-3">
-      <label  class="form-label">Username</label>
-      <input type="text" name="username" class="form-control" required maxlength="20" minlength="4"/>
-    </div>
-    <div class="mb-3">
+  <h3 class="text-center fw-bold">REGISTER</h3>
+
+  <!-- user details -->
+  <div class="fw-bold fs-4">user details</div>
+  <div class="card p-2 mb-3">
+      <label class="form-label">Name</label>
+      <input type="text" name="name" class="form-control" required maxlength="50" minlength="4" />
+
+      <label class="form-label">email</label>
+      <input type="email" name="email" class="form-control" required maxlength="20" minlength="4" />
+ 
       <label class="form-label">Password</label>
-      <input type="password" name="password" class="form-control" required maxlength="10" minlength="4"/>
+      <input type="password" name="password" class="form-control" required maxlength="10" minlength="4" />
+   
+      <label class="form-label">Repeat password</label>
+      <input type="password" name="repeat_password" class="form-control" required maxlength="10" minlength="4" />
+
+    <div class="d-flex flex fex-row justify-content-end mt-3">
+      <a href="{{url_for('users.login')}}" class="btn btn-light"> login instead <i class="fa-solid fa-arrow-right"></i> </a>
     </div>
-    <div class="mb-3 form-check">
-      <a href="{{url_for('users.login')}}" class="nav-link">already have account, login.</a>
-    </div>
-    {% for message in get_flashed_messages() %}
-      <div class="alert alert-warning alert-dismissible fade show">
-         {{ message }} 
-         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> 
-      </div>
-    {% endfor %}
-    <button type="submit" class="btn btn-primary">Submit</button>
-    
-  </form>
+  </div>
+
+  {% for message in get_flashed_messages() %}
+  <div class="alert alert-warning alert-dismissible fade show">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  {% endfor %}
+  <button type="submit" class="btn btn-primary">Submit</button>
+
+</form>
 
 
 {% endblock %}
