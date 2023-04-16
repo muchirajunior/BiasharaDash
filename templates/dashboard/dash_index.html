@@ -2,6 +2,70 @@
 
 {% block content %}
 
-<div>dashbaord main page</div>
+<div class="d-flex flex-column">
+    <div class="card border-secondary-subtle shadow m-2 p-2 d-flex flex-row" >
+        <div class="d-flex flex-column flex-fill">
+            <span class="fw-bold fs-4">Dashboard</span>
+            <span class="text-muted">Hello, lets check some of your stats</span>
+        </div>
+        <div>
+            <a href="#" class="btn btn-dark rounded-pill m-2"> export data</a>
+        </div>        
+    </div>
+    <div class="border-secondary-subtle shadow p-2 m-2  row" >
+
+        <div class="card p-2 shadow m-2 d-flex flex-row" style="max-width: 20rem;"> 
+            <span class="rounded-circle p-3 m-1 bg-primary text-white"><i class="fa-solid fa-palette fs-2"></i></span>
+            <div class="d-flex flex-column ms-3">
+                <span class="fw-bold text-muted ">Products</span>
+                <span class="fw-bold fs-2">20</span>
+            </div>            
+        </div>
+
+        <div class="card p-2 shadow m-2 d-flex flex-row" style="max-width: 20rem;"> 
+            <span class="rounded-circle p-3 m-1 bg-primary text-white"><i class="fa-solid fa-layer-group fs-2"></i></span>
+            <div class="d-flex flex-column ms-3">
+                <span class="fw-bold text-muted ">services</span>
+                <span class="fw-bold fs-2">30</span>
+            </div>            
+        </div>
+
+        <div class="card p-2 shadow m-2 d-flex flex-row" style="max-width: 20rem;"> 
+            <span class="rounded-circle p-3 m-1 bg-primary text-white"><i class="fa-solid fa-palette fs-2"></i></span>
+            <div class="d-flex flex-column ms-3">
+                <span class="fw-bold text-muted ">Orders</span>
+                <span class="fw-bold fs-2">40</span>
+            </div>            
+        </div>
+
+        <div class="card p-2 shadow m-2 d-flex flex-row" style="max-width: 20rem;"> 
+            <span class="rounded-circle p-3 m-1 bg-primary text-white"><i class="fa-solid fa-palette fs-2"></i></span>
+            <div class="d-flex flex-column ms-3">
+                <span class="fw-bold text-muted ">Sales</span>
+                <span class="fw-bold fs-2">60</span>
+            </div>            
+        </div>
+
+
+        <div class="card p-2 shadow m-2 d-flex flex-row" style="max-width: 20rem;"> 
+            <span class="rounded-circle p-3 m-1 bg-primary text-white"><i class="fa-solid fa-palette fs-2"></i></span>
+            <div class="d-flex flex-column ms-3">
+                <span class="fw-bold text-muted ">Traffic Today</span>
+                <span class="fw-bold fs-2">2000</span>
+            </div>            
+        </div>
+
+        <div class="card p-2 shadow m-2 d-flex flex-row" style="max-width: 20rem;"> 
+            <span class="rounded-circle p-3 m-1 bg-primary text-white"><i class="fa-solid fa-palette fs-2"></i></span>
+            <div class="d-flex flex-column ms-3">
+                <span class="fw-bold text-muted ">Traffic this week</span>
+                <span class="fw-bold fs-2">40000</span>
+            </div>            
+        </div>
+
+
+        
+    </div>
+</div>
 
 {% endblock %}

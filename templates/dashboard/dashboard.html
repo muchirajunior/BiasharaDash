@@ -4,60 +4,51 @@
 {% if current_user.business_id == None %}
 {% include "missing_business.html" %}
 {% else %}
-<main class="d-flex flex-column" style="height: 100vh; max-height: 100vh;">
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">Business name</a>
+<div class="d-flex flex-column " style="height: 100vh; max-height: 100vh;">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary p-1 shadow">
+        <div class="container-fluid justify-content-center">
+            <a class="navbar-brand fw-bold fs-4" href="#">Business name</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"data-bs-target="#navbarSupportedContent">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            Dropdown
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled">Disabled</a>
-                    </li>
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 w-75">
+                    <span class="navbar-toggler-icon m-2"></span>
+                    <input class="form-control shadow border-secondary-subtle w-50 mx-auto rounded-pill" type="search" placeholder="Search" aria-label="Search">
                 </ul>
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
+                <div class="d-flex flex-column ms-2 me-2 justify-content-center align-items-center">
+                    <span class="fw-bold fs-5">{{current_user.name}}</span>
+                    <span class="fw-bold text-muted fs-6">{{current_user.email}}</span>
+                </div>
+                <img class="img rounded-circle m-0" src="{{url_for('static',filename='/images/profile1.jpg')}}" alt="business profile" width="60px" height="60px" srcset="">
             </div>
         </div>
     </nav>
 
-    <section class="container-fluid flex-fill d-flex flex-row">
-        <nav class="d-flex flex-column bg-danger" style="height: 100%;">
-            <a href="#" class="nav-link"> Home </a>
-            <a href="#" class="nav-link"> Items </a>
+    <section class="flex-fill d-flex flex-row">
+        <nav class="d-flex flex-column bg-white shadow p-2 col-2" style="height: 100%; min-width: 150px; max-width: 200px;">
+            <span class="text-muted fw-bold">main menu</span>
+            <hr class="m-0">
+            <a href="/dashboard" class="nav-link text-muted fw-bold m-2"> <i class="fa-brands fa-microsoft me-1"></i> Dashboard </a>
+            <a href="/product" class="nav-link text-muted fw-bold m-2"> <i class="fa-solid fa-list me-1"></i> products </a>
+            <a href="/service" class="nav-link text-muted fw-bold m-2"> <i class="fa-solid fa-sliders me-1"></i> Services </a>
+            <a href="/orders" class="nav-link text-muted fw-bold m-2"> <i class="fa-solid fa-bag-shopping me-1"></i> Orders </a>
+            <a href="#" class="nav-link text-muted fw-bold m-2"> <i class="fa-solid fa-cart-shopping me-1"></i> Sales </a>
+            <a href="#" class="nav-link text-muted fw-bold m-2"> <i class="fa-solid fa-message me-1"></i> Messages </a>
+            <span class="flex-fill"></span>
+            
+            <a href="#" class="nav-link text-muted fw-bold m-2"> <i class="fa-solid fa-gear"></i></i> settings </a>
+            <a href="{{url_for('users.logout')}}" class="nav-link text-muted fw-bold m-2"> <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout </a>
+             
         </nav>
-        <div class="container overflow-hidden">
+        <main class="container-fluid w-100 flex-fill overflow-scroll dash-body mt-2" style="max-height: 90vh;" >
             {% block content %}
-            <!-- dashboard item -->
+                <!-- dashboard item -->
             {% endblock %}
-        </div>
+        </main>
     </section>
 
-</main>
+</div>
 
 {% endif %}
 

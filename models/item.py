@@ -18,10 +18,11 @@ class Item(db.Model):
     business_id=db.Column(db.Integer,db.ForeignKey('businesses.id'),nullable=False)
     
 
-    def __init__(self,name,price,description,photo,type,business_id):
+    def __init__(self,name,price,description,stock,photo,type,business_id):
         self.name=name
         self.price=price
         self.description=description
         self.photo=photo
+        self.stock=stock
         self.type=type
         self.business_id=business_id
