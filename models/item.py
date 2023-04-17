@@ -10,6 +10,7 @@ class Item(db.Model):
     stock=db.Column(db.Integer)
     type=db.Column(db.String(10),default="product")#product/service
     active=db.Column(db.Boolean,default=True)
+    cartegory=db.Column(db.String(20))
     photo=db.Column(db.String)
     photo_2=db.Column(db.String)
     photo_3=db.Column(db.String)
@@ -18,11 +19,12 @@ class Item(db.Model):
     business_id=db.Column(db.Integer,db.ForeignKey('businesses.id'),nullable=False)
     
 
-    def __init__(self,name,price,description,stock,photo,type,business_id):
+    def __init__(self,name,price,description,stock,photo,type,cartegory,business_id):
         self.name=name
         self.price=price
         self.description=description
         self.photo=photo
         self.stock=stock
         self.type=type
+        self.cartegory=cartegory
         self.business_id=business_id
