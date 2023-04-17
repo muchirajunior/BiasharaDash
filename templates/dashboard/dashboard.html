@@ -16,10 +16,13 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0 w-75">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <span class="navbar-toggler-icon m-2"></span>
-                    <input class="form-control shadow border-secondary-subtle w-50 mx-auto rounded-pill" type="search" placeholder="Search" aria-label="Search">
+                   
                 </ul>
+                <form action="" class="w-100">
+                    <input class="form-control shadow border-secondary-subtle w-50 mx-auto rounded-pill" name="search" type="search" placeholder="Search" maxlength="20" aria-label="Search"> 
+                 </form>
                 <div class="d-flex flex-column ms-2 me-2 justify-content-center align-items-center">
                     <span class="fw-bold fs-5">{{current_user.name}}</span>
                     <span class="fw-bold text-muted fs-6">{{current_user.email}}</span>

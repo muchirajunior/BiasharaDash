@@ -1,0 +1,52 @@
+{% extends "dashboard.html" %}
+
+{% block content %}
+
+<!-- add order modal -->
+<div class="modal fade" id="addOrderModal" data-bs-backdrop="static">
+    <div class="modal-dialog modal-content" >
+        <div class="modal-header border-0 fw-bold fs-4">add new order</div>
+        <form class="" action="" method="post">
+            <div class="modal-body">
+                <label for="">Customer name</label>
+                <input type="text" class="form-control " name="customer" maxlength="30" minlength="4" placeholder="customer" required>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button  class="btn btn-dark " data-bs-dismiss="modal">cancel</button>
+                <button type="submit" class="btn btn-primary ">add new</button>
+            </div>
+            
+        </form>
+    </div>
+</div>
+
+<div class="card p-2">
+
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#id</th>
+            <th scope="col">customer</th>
+            <th scope="col">Total</th>
+            <th scope="col">Date</th>
+            <th>Action</th>
+            <th><button  class="btn btn-primary" data-bs-target="#addOrderModal" data-bs-toggle="modal">add new</button></th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for order in orders %}
+          <tr class="rounded shadow ">
+            <th scope="row">{{order.id}}</th>
+            <td>{{order.customer}}</td>
+            <td>{{order.total}}</td>
+            <td>{{order.created_at.strftime("%H:%M , %d-%m-%Y ")}}</td>
+            <td> <a href="/orders/{{order.id}}" class="btn btn-primary"> open <i class="fa-solid fa-arrow-right-long"></i> </a> </td>
+          </tr>
+        {% endfor %}
+          
+        </tbody>
+      </table>
+</div>
+
+{% endblock %}
+

@@ -6,6 +6,7 @@
 
 <div class="card p-2">
   
+  <!-- add item modal -->
   <div class="modal fade" id="addItem" data-bs-backdrop="static" >
     <div class="modal-dialog modal-content" >
       <div class="modal-header border-0 fw-bold"> Add Item Card </div>
@@ -29,7 +30,6 @@
                 <option value="{{item}}">{{item}}</option>
                 {% endfor%}
             {% endif %}
-            
           </select> 
           <label for="">photo</label>
           <input type="file" name="photo" class="form-control"  >
@@ -43,8 +43,8 @@
   </div>
 
   <table class="table">
-    <thead>
-      <tr class="bg-light m-2  ">
+    <thead class="">
+      <tr class="bg-light m-2">
         <th scope="col">#</th>
         <th scope="col">item</th>
         <th scope="col">price</th>
@@ -59,6 +59,7 @@
     <tbody class="">
       {% for item in items%}
 
+      <!-- update item modal for each item -->
       <div class="modal fade" id="itemDialog-{{item.id}}">
         <div class="modal-dialog modal-content">
           <div class="modal-header border-0 fw-bold"> Item Card </div>
@@ -77,6 +78,14 @@
               <label for="" class="text-muted mt-2">is active</label>
               <input type="checkbox" class="m-3" name="active"  {% if item.active %} checked="{{item.value}}" {% endif %} id="">
               <br>
+              <select name="cartegory" id="" class="form-select" >
+                <option value="{{item.cartegory}}" selected disabled>select cartegory</option>
+                {% if cartegories != None %}
+                    {% for item in cartegories%}
+                    <option value="{{item}}">{{item}}</option>
+                    {% endfor%}
+                {% endif %}
+              </select> 
               <label for="">photo</label>
               <input type="file" name="photo" class="form-control" value="{{item.photo}}">
 
@@ -90,6 +99,7 @@
         </div>
       </div>
 
+      <!-- delete item modal for each item -->
       <div class="modal fade" id="deleteDialog-{{item.id}}">
         <div class="modal-dialog modal-content modal-sm">
           <div class="modal-header border-0 fw-bold">{{item.name}}</div>
@@ -100,7 +110,8 @@
           </div>
         </div>
       </div>
-
+      
+      <!-- item row in the table -->
       <tr class="m-2 shadow rounded border-secondary-subtle" data-bs-target="#itemDialog-{{item.id}}"
         data-bs-toggle="modal">
         <th scope="row">{{item.id}}</th>

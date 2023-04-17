@@ -1,3 +1,4 @@
+from datetime import datetime
 import json
 from flask import Blueprint, render_template,request,redirect
 from flask_login import login_required,current_user
@@ -21,7 +22,8 @@ def index_route():
 
 @dashboard.route("/<type>",methods=["POST","GET"])
 @login_required
-def itemss_route(type):
+def items_route(type):
+
     if request.method=="POST":
         name=request.form.get("name")
         price=request.form.get("price")
@@ -33,27 +35,36 @@ def itemss_route(type):
         db.session.add(Item(name,price,description,stock,photo,type,cartegory,current_user.business_id))
         db.session.commit()
 
-    items= Item.query.filter(Item.business_id==current_user.business_id, Item.type==type).all()
+    
     cartegories=Business.query.filter_by(id=current_user.business_id).first().items_cartegories
-
+    if (request.args.get('search') != None):
+        search=request.args.get('search')
+        items= Item.query.filter(Item.business_id==current_user.business_id, Item.type==type,Item.name.like(f"%{search}%")).all()
+    else:
+        items= Item.query.filter(Item.business_id==current_user.business_id, Item.type==type).all()
+       
     return render_template("items.html",items=items,cartegories=cartegories)
 
 @dashboard.route("/<type>/<id>",methods=["POST"])
 @login_required
 def products_update(type,id):
+   
     if request.method=="POST":
         item:Item=Item.query.filter_by(id=id).first()
         item.name=request.form.get("name")
         item.price=request.form.get("price")
         item.stock=request.form.get("stock")
         item.description=request.form.get("description")
-        item.cartegory=request.form.get("cartegory")
+        if(request.form.get("cartegory") != None):
+            item.cartegory=request.form.get("cartegory")
         active=request.form.get("active")
         if active=='on':
             item.active=True
         else:
             item.active=False
-        item.photo=request.form.get("photo")
+        if(request.form.get("photo") != None):
+            item.photo=request.form.get("photo")
+        item.updated_at=datetime.now()
         db.session.commit()
 
     return redirect("/"+type)
@@ -82,9 +93,3 @@ def item_cartegories_route():
         db.session.commit()
     return  redirect(request.referrer)
 
-
-@dashboard.route("orders",methods=["POST","GET"])
-@login_required
-def orders_route():
-
-    return render_template('orders.html')
