@@ -46,10 +46,7 @@ class AdminModelView(ModelView):
     can_view_details=True
     can_set_page_size=True
     column_display_all_relations=False
-    form_columns_width='400px'
     form_excluded_columns=['password']
-    # create_modal = True
-    # edit_modal = True
     def is_accessible(self):
         return current_user.is_authenticated and current_user.role=="admin"
                 
@@ -60,7 +57,7 @@ class AdminModelView(ModelView):
         return redirect(url_for('users.login', next=request.url))
 
 #setup the flask admin page
-admin=Admin(app,template_mode="bootstrap4",)
+admin=Admin(app,template_mode="bootstrap4")
 admin.add_view( AdminModelView(User, db.session)) 
 admin.add_view( AdminModelView(Business, db.session)) 
 admin.add_view( AdminModelView(Item, db.session))
