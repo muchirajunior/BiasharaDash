@@ -1,15 +1,34 @@
 {% extends "dashboard.html" %}
 
 {% block content %}
+<!-- complete order modal -->
+<div class="modal fade" id="completeOrder">
+    <div class="modal-dialog modal-content modal-sm">
+    <div class="modal-header border-0 fw-bold">Confrim Complete</div>
+    <div class="modal-body text-muted">are you sure you want to complete this order</div>
+    <div  class="modal-footer justify-content-between">
+        <button class="btn btn-outline-dark rounded-pill" data-bs-dismiss="modal">cancel</button>
+        <a href="/orders/{{order.id}}/complete" class="btn btn-primary rounded-pill">complete</a>
+    </div>
+    </div>
+</div>
 
 <div class="card p-2">
     <div class="m-2 fw-bold fs-3  d-flex flex -row justify-content-between mb-3 shadow p-2">
        <span>{{order.customer}}</span>  
+       <span> <button class="btn btn-primary" data-bs-target="#completeOrder" data-bs-toggle="modal">complete order </button> </span>
        <span class="bg-primary-subtle p-2 rounded text-muted">Total: {{order.total}} </span>
     </div>
 
+    {% for message in get_flashed_messages() %}
+      <div class="alert alert-danger alert-dismissible fade show">
+         {{ message }} 
+         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> 
+      </div>
+    {% endfor %}
+
     <div class="d-flex flex-row align-items-start"> 
-        <table class="table shadow rounded">
+        <table class="table shadow rounded me-3">
             <thead>
               <tr>
                 <th>#id</th>
@@ -19,7 +38,7 @@
                 <th scope="col">action</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody >
             {% for item in order_items %}
                 <!-- delete item modal for each item -->
                 <div class="modal fade" id="deleteDialog-{{item.id}}">
@@ -33,12 +52,12 @@
                     </div>
                 </div>
 
-              <tr>
+              <tr class="">
                 <th scope="row">{{item.id}}</th>
                 <td>{{item.name}}</td>
                 <td>{{item.price}}</td>
                 <td>{{item.quantity}}</td>
-                <td> <button class="btn btn-danger" data-bs-target="#deleteDialog-{{item.id}}" data-bs-toggle="modal"> remove </button> </td>
+                <td class="row"><button class="btn btn-danger " data-bs-target="#deleteDialog-{{item.id}}" data-bs-toggle="modal"> remove </button> </td>
               </tr>
             {% endfor %}
             </tbody>

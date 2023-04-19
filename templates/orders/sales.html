@@ -1,0 +1,38 @@
+{% extends "dashboard.html" %}
+
+{% block content %}
+
+<div class="card p-2">
+
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#id</th>
+            <th scope="col">customer</th>
+            <th scope="col">Total</th>
+            <th scope="col">Date Time</th>
+            <th>Action</th>
+            <th>
+                <form action="" class="d-flex flex-row" method="post">
+                    <input type="date" class="form-control ms-2 me-2 shadow" name="selldate" value="{{date}}" required>
+                    <button type="submit" class="btn btn-outline-dark " >filter</button>
+                </form>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for order in orders %}
+          <tr class="rounded shadow ">
+            <th scope="row">{{order.id}}</th>
+            <td>{{order.customer}}</td>
+            <td>{{order.total}}</td>
+            <td>{{order.created_at.strftime("%d-%m-%Y , %H:%M ")}}</td>
+            <td> <a href="/orders/sales/{{order.id}}" class="btn btn-primary"> open <i class="fa-solid fa-arrow-right-long"></i> </a> </td>
+          </tr>
+        {% endfor %}
+          
+        </tbody>
+      </table>
+</div>
+
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends "dashboard.html" %}
+
+{% block content %}
+<!-- complete order modal -->
+<div class="modal fade" id="completeOrder">
+    <div class="modal-dialog modal-content modal-sm">
+    <div class="modal-header border-0 fw-bold">Confrim Reverse Sale</div>
+    <div class="modal-body text-muted">are you sure you want to reverse this sale back to order</div>
+    <div  class="modal-footer justify-content-between">
+        <button class="btn btn-outline-dark rounded-pill" data-bs-dismiss="modal">cancel</button>
+        <a href="/orders/sales/{{order.id}}/reverse" class="btn btn-danger rounded-pill">reverse</a>
+    </div>
+    </div>
+</div>
+
+<div class="card p-2">
+    <div class="m-2 fw-bold fs-3  d-flex flex -row justify-content-between mb-3 shadow p-2">
+       <span>{{order.customer}}</span>  
+       <span> <button class="btn btn-danger" data-bs-target="#completeOrder" data-bs-toggle="modal">reserve sale </button> </span>
+       <span class="bg-primary-subtle p-2 rounded text-muted">Total: {{order.total}} </span>
+    </div>
+
+    <div class=""> 
+        <table class="table shadow rounded me-3">
+            <thead>
+              <tr>
+                <th>#id</th>
+                <th>name</th>
+                <th scope="col">price</th>
+                <th scope="col">quantity</th>
+                <th scope="col">action</th>
+              </tr>
+            </thead>
+            <tbody >
+            {% for item in order_items %}
+              <tr class="">
+                <th scope="row">{{item.id}}</th>
+                <td>{{item.name}}</td>
+                <td>{{item.price}}</td>
+                <td>{{item.quantity}}</td>
+               </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        
+    </div>
+    
+</div>
+
+{% endblock %}
