@@ -41,7 +41,10 @@
             <a href="/dashboard" class="nav-link text-muted fw-bold m-2"> <i class="fa-brands fa-microsoft me-1"></i> Dashboard </a>
             <a href="/product" class="nav-link text-muted fw-bold m-2"> <i class="fa-solid fa-list me-1"></i> Products </a>
             <a href="/service" class="nav-link text-muted fw-bold m-2"> <i class="fa-solid fa-sliders me-1"></i> Services </a>
+            <a href="/customers" class="nav-link text-muted fw-bold m-2"><i class="fa-solid fa-users"></i> Customers </a>
+            {% if type is defined %}
             <a href="#"  class="nav-link text-muted fw-bold m-2" data-bs-target="#caretegoriesModal" data-bs-toggle="modal"> <i class="fa-solid fa-layer-group me-1"></i> Cartegories </a>
+            {% endif %}
             <a href="/orders" class="nav-link text-muted fw-bold m-2"> <i class="fa-solid fa-bag-shopping me-1"></i> Orders </a>
             <a href="/orders/sales" class="nav-link text-muted fw-bold m-2"> <i class="fa-solid fa-cart-shopping me-1"></i> Sales </a>
             <a href="#" class="nav-link text-muted fw-bold m-2"> <i class="fa-solid fa-message me-1"></i> Messages </a>

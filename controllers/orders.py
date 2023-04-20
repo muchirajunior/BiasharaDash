@@ -137,3 +137,13 @@ def sale_route(id):
 
     order_items=OrderItem.query.filter_by(order_id=order.id).all()
     return render_template("sale_page.html",order=order,order_items=order_items)
+
+@orders.route("/sales/<id>/reverse")
+@login_required
+def sale_reverse_route(id):
+    order:Order= Order.query.filter(Order.id==id,Order.sold ==True,Order.business_id==current_user.business_id).first()
+    if order == None:
+        return redirect(request.referrer)
+    order.sold=False
+    db.session.commit()
+    return redirect("/orders/"+id)

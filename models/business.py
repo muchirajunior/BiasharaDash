@@ -22,6 +22,7 @@ class Business(db.Model):
     users=db.relationship("User",backref='businesses',lazy=True)
     items=db.relationship("Item",backref='businesses',lazy=True)
     orders=db.relationship("Order",backref='businesses',lazy=True)
+    customers=db.relationship("Customer",backref='businesses',lazy=True)
 
     def __init__(self,name,username,address,cartegory,phone):
         self.name=name

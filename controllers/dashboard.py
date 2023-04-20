@@ -1,24 +1,25 @@
 from datetime import datetime
-import json
 from flask import Blueprint, render_template,request,redirect
 from flask_login import login_required,current_user
 from models.business import Business
 from models.item import Item,db
+from models.customer import Customer
+
 
 dashboard=Blueprint("dashboard",__name__,url_prefix="",template_folder="../templates/dashboard")
-   
+
 @dashboard.route("/")
 @login_required
 def index():
-    cartegories=Business.query.filter_by(id=current_user.business_id).first().items_cartegories
-    return render_template("dash_index.html",cartegories=cartegories)
+
+    return render_template("dash_index.html")
 
 
 @dashboard.route("/dashboard/")
 @login_required
 def index_route():
-    cartegories=Business.query.filter_by(id=current_user.business_id).first().items_cartegories
-    return render_template("dash_index.html",cartegories=cartegories)
+
+    return render_template("dash_index.html")
 
 @dashboard.route("/<type>",methods=["POST","GET"])
 @login_required
@@ -43,7 +44,7 @@ def items_route(type):
     else:
         items= Item.query.filter(Item.business_id==current_user.business_id, Item.type==type).all()
        
-    return render_template("items.html",items=items,cartegories=cartegories)
+    return render_template("items.html",items=items,cartegories=cartegories,type=type)
 
 @dashboard.route("/<type>/<id>",methods=["POST"])
 @login_required
@@ -93,3 +94,46 @@ def item_cartegories_route():
         db.session.commit()
     return  redirect(request.referrer)
 
+
+
+@dashboard.route("/customers",methods=['POST','GET'])
+@login_required
+def customers_route():
+    if request.method =="POST":
+        name=request.form.get('name')
+        phone=request.form.get('phone')
+        email=request.form.get('email')
+        address=request.form.get('address')
+        db.session.add(Customer(name,address,phone,email,current_user.business_id))
+        db.session.commit()
+    search=''
+    if (request.args.get('search') != None):
+        search=request.args.get('search')
+    customers = Customer.query.filter(Customer.business_id==current_user.business_id,Customer.name.like(f"%{search}%")).all()
+    return render_template('customers.html',customers=customers)
+
+@dashboard.route("/customers/<id>",methods=['POST','GET'])
+@login_required
+def customer_route(id):
+    customer = Customer.query.filter_by(id=id,business_id=current_user.business_id).first()
+    if customer == None:
+        return redirect(request.referrer)
+    if request.method =="POST":
+        customer.name=request.form.get('name')
+        customer.phone=request.form.get('phone')
+        customer.email=request.form.get('email')
+        customer.address=request.form.get('address')
+        db.session.commit()
+
+    return redirect(request.referrer) 
+
+@dashboard.route("/customers/<id>/delete")
+@login_required
+def customer_delete_route(id):
+    customer = Customer.query.filter_by(id=id,business_id=current_user.business_id).first()
+    if customer == None:
+        return redirect(request.referrer)
+    db.session.delete(customer)
+    db.session.commit()
+
+    return redirect(request.referrer)
