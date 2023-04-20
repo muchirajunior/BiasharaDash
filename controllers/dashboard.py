@@ -8,6 +8,13 @@ from models.customer import Customer
 
 dashboard=Blueprint("dashboard",__name__,url_prefix="",template_folder="../templates/dashboard")
 
+def businessData():
+    try:
+        business:Business=Business.query.filter_by(id=current_user.business_id).first()
+        return business
+    except:
+        return None
+
 @dashboard.route("/")
 @login_required
 def index():

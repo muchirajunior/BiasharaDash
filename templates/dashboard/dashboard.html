@@ -1,8 +1,14 @@
 {% extends "base.html" %}
 
 {% block body %}
+
 {% if current_user.business_id == None %}
-{% include "missing_business.html" %}
+    <!-- check for unassigned user -->
+    {% include "missing_business.html" %}
+
+{% elif businessData().active == False %}
+    <!-- check for inactive business -->
+    {% include "inactive_business.html" %}
 {% else %}
 
 {% include "cartegories.html" %}
