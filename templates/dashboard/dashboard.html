@@ -17,8 +17,8 @@
 
     <nav class="navbar navbar-expand-lg bg-body-tertiary p-1 shadow">
         <div class="container-fluid justify-content-between">
-            <a class="navbar-brand fw-bold fs-4" href="#">Business name</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"data-bs-target="#navbarSupportedContent">
+            <a class="navbar-brand fw-bold fs-4" href="#">{{businessData().name}}</a>
+            <button class="navbar-toggler shadow" type="button" data-bs-toggle="offcanvas"data-bs-target="#dash-offcanvas">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -40,8 +40,7 @@
 
     <section class="flex-fill d-flex flex-row">
 
-
-        <nav class="d-flex flex-column bg-white shadow p-2 col-2" style="height: 100%; min-width: 150px; max-width: 200px;">
+        <nav class=" flex-column bg-white shadow p-2 col-2 menu-nav" style="height: 100%; min-width: 150px; max-width: 200px;">
             <span class="text-muted fw-bold">main menu</span>
             <hr class="m-0">
             <a href="/dashboard" class="nav-link text-muted fw-bold m-2"> <i class="fa-brands fa-microsoft me-1"></i> Dashboard </a>
@@ -68,6 +67,41 @@
     </section>
 
 </div>
+
+<!-- offcanvas menu -->
+<div class="offcanvas offcanvas-start" tabindex="-1" id="dash-offcanvas" aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas-header">
+      <div class="d-flex flex-row justify-content-between">
+        <img class="img rounded-circle m-0" src="{{url_for('static',filename='/images/profile1.jpg')}}" alt="business profile" width="60px" height="60px" srcset="">
+
+        <div class="d-flex flex-column ms-2 me-2 justify-content-center align-items-center">
+            <span class="fw-bold fs-5">{{current_user.name}}</span>
+            <span class="fw-bold text-muted fs-6">{{current_user.email}}</span>
+        </div>
+       
+      </div>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body flex-fill">
+        <span class="text-muted fw-bold">main menu</span>
+        <hr class="m-0">
+        <a href="/dashboard" class="nav-link text-muted fw-bold m-3"> <i class="fa-brands fa-microsoft me-1"></i> Dashboard </a>
+        <a href="/product" class="nav-link text-muted fw-bold m-3"> <i class="fa-solid fa-list me-1"></i> Products </a>
+        <a href="/service" class="nav-link text-muted fw-bold m-3"> <i class="fa-solid fa-sliders me-1"></i> Services </a>
+        <a href="/customers" class="nav-link text-muted fw-bold m-3"><i class="fa-solid fa-users"></i> Customers </a>
+        {% if type is defined %}
+        <a href="#"  class="nav-link text-muted fw-bold m-3" data-bs-target="#caretegoriesModal" data-bs-toggle="modal"> <i class="fa-solid fa-layer-group me-1"></i> Cartegories </a>
+        {% endif %}
+        <a href="/orders" class="nav-link text-muted fw-bold m-3"> <i class="fa-solid fa-bag-shopping me-1"></i> Orders </a>
+        <a href="/orders/sales" class="nav-link text-muted fw-bold m-3"> <i class="fa-solid fa-cart-shopping me-1"></i> Sales </a>
+        <a href="#" class="nav-link text-muted fw-bold m-3"> <i class="fa-solid fa-message me-1"></i> Messages </a>
+        <span class="mt-5 mb-3"></span>
+        
+        <a href="#" class="nav-link text-muted fw-bold m-3"> <i class="fa-solid fa-gear"></i></i> settings </a>
+        <a href="#" class="nav-link text-muted fw-bold m-3" data-bs-toggle="modal" data-bs-target="#logoutDialog"> <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout </a>
+             
+    </div>
+  </div>
 
 <!-- logout dialog -->
 <div class="modal fade shadow" id="logoutDialog">

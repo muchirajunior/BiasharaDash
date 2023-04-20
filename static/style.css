@@ -46,4 +46,14 @@
   main:hover::-webkit-scrollbar-thumb {
     display: block;
   }
+
+.menu-nav{
+    display: flex;
+}
+  
+@media screen and (max-width:992px) {
+  .menu-nav{
+    display: none;
+  }
+}
   
