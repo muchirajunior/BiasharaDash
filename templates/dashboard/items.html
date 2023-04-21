@@ -51,7 +51,8 @@
   <table class="table">
     <thead class="">
       <tr class="bg-light m-2 table-row">
-        <th scope="col">#</th>
+        <th scope="col">#id</th>
+        <th scope="col">photo</th>
         <th scope="col">item</th>
         <th scope="col">price</th>
         <th scope="col" name="stock_field">stock</th>
@@ -126,7 +127,9 @@
       <div class="card table-card m-2" style="max-width: 22rem;">
         <img src="{{url_for('static',filename="/images/item.png")}}" class="card-img-top bg-primary-subtle"
           style="max-height: 250px;" alt="...">
-        <h5 class="card-title m-2">{{item.name}}</h5>
+
+        <h5 class="card-title m-2 d-flex flex-row justify-content-between"> <span>{{item.name}}</span> <span>#{{item.id}}</span> </h5>
+
         <div class="card shadow border-secondary-subtle d-flex flex-row p-2 m-2 justify-content-between">
           <div class="text-center me-1">
             <b>price</b> <br>
@@ -158,10 +161,11 @@
       <!-- item row in the table -->
       <tr class="m-2 shadow rounded border-secondary-subtle table-row" data-bs-target="#itemDialog-{{item.id}}"
         data-bs-toggle="modal">
-        <th scope="row">
+        <th scope="row"> {{item.id}} </th>
+        <td >
           <img src="{{url_for('static',filename="/images/item.png")}}"
             class="img-fluid rounded-circle bg-primary-subtle" width="50px" alt="" srcset="">
-        </th>
+        </td>
         <td>{{item.name}}</td>
         <td>{{item.price}}</td>
         {% if item.type=="product" %}
