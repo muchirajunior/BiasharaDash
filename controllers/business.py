@@ -1,6 +1,6 @@
-from flask import Blueprint, render_template,jsonify
+from flask import Blueprint, render_template,jsonify,request,redirect
 from flask_login import login_required,current_user
-from models.business import Business
+from models.business import Business,db
 from schemas import businessSchema
 
 business=Blueprint("businesses",__name__,url_prefix="/business",template_folder="../templates/business")
@@ -21,4 +21,25 @@ def business_api(username:str):
     bs=businessSchema.dump(business)
 
     return jsonify(bs)
+
+@business.route("/profile",methods=['POST','GET'])
+@login_required
+def profile():
+    business:Business = Business.query.get(current_user.id)
+    if(business== None):
+        return redirect(request.referrer)
+    if request.method == 'POST':
+        business.name=request.form.get('name')
+        business.email=request.form.get('email')
+        business.address=request.form.get('address')
+        business.website=request.form.get('website')
+        business.phone=request.form.get('phone')
+        if (request.form.get('pdf_menu') != None):
+            #upload-file
+            business.pdf_menu=""
+        if (request.form.get('photo') != None):
+            #upload-file
+            business.photo=""
+        db.session.commit()
     
+    return redirect(request.referrer)

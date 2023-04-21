@@ -1,11 +1,11 @@
 <div class="modal fade" id="updateBusinessModal" data-bs-backdrop="static">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header fw-bold">
                 Update Business Profile
                 <button class="btn-close shadow" data-bs-dismiss="modal"></button>
             </div>
-            <form action="" method="post">
+            <form action="/business/profile" method="post">
                 <div class="modal-body">
                     <label for="">business name</label>
                     <input type="text" class="form-control" name="name" value="{{businessData().name}}" minlength="4"  maxlength="50" required>
@@ -18,7 +18,7 @@
                     <label for="">phone</label>
                     <input type="tel" class="form-control" name="phone" value="{{businessData().phone}}" minlength="4"  maxlength="14">
                     <label for="">website</label>
-                    <input type="text" class="form-control" name="website" value="{{businessData().website}}" minlength="4"  maxlength="14">
+                    <input type="text" class="form-control" name="website" value="{{businessData().website}}" minlength="4"  maxlength="100">
                     <label for="">pdf menu</label>
                     <input type="file" class="form-control" name="pdf_menu" accept=".pdf" value="{{businessData().pdf_menu}}" >
                     <label for="">profile photo</label>

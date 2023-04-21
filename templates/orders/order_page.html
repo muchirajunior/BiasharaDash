@@ -47,7 +47,7 @@
 
     <!-- complete order modal -->
     <div class="modal fade" id="completeOrder">
-        <div class="modal-dialog modal-sm">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
           <div class="modal-content">
             <div class="modal-header border-0 fw-bold">Confrim Complete</div>
             <div class="modal-body text-muted">are you sure you want to complete this order</div>
@@ -61,7 +61,7 @@
 
     <!-- all items modal -->
     <div class="modal fade" id="itemsModal">
-        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+        <div class="modal-dialog modal-dialog-scrollable ">
             <div class="modal-content">
                 <div class="modal-header fw-bold flex-wrap">
                     <span class="me-5">Pick items Card  </span> 
@@ -99,7 +99,7 @@
     {% for item in items %}
         <!-- add item modal -->
         <div class="modal fade" id="addItem-{{item.id}}"  >
-            <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-dialog ">
             <div class="modal-content">
                 <div class="modal-header fw-bold border-0">Add Item Card</div>
                 <form action="" method="post">

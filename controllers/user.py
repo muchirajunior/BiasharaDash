@@ -1,6 +1,6 @@
 import random
 from flask import Blueprint, render_template,request,redirect,flash
-from flask_login import login_user, logout_user
+from flask_login import login_user, logout_user,login_required,current_user
 from flask_mail import Message
 from models.business import Business
 from models.cartegory import Cartegory
@@ -33,6 +33,7 @@ def login():
                 user.otp=None
                 db.session.commit()
                 login_user(user)
+                flash('please reset your password on the settings section !!')
                 return redirect('/')
             elif user.otp != None and str(user.otp) != password:
                 flash("wrong otp !!")
@@ -89,7 +90,7 @@ def forgot_password():
                 return render_template('forgot_password.html')
             otp=random.randint(100000,999999)
             message= Message(
-                    body=f"Hello {user.name}  \n\n your otp is {otp} use it to login and reset your password  \n \n Thank You",
+                    body=f"Hello {user.name}  \n\n your otp is {otp} use it to login and reset your password as this is is one time pin that will expire after use.  \n \n Thank You",
                     subject="forgot password otp",
                     sender="non-reply@biashara.buzz",
                     recipients=[email]
@@ -102,6 +103,22 @@ def forgot_password():
     except Exception as error:
         flash(error.args)
     return render_template('forgot_password.html')
+
+@users.route("/reset-password",methods=['POST','GET'])
+@login_required
+def reset_password():
+    if request.method == "POST":
+        password=request.form.get('password')
+        repeat_password=request.form.get('repeat_password')
+        if (password == repeat_password):
+            new_pass=bcrypt.generate_password_hash(password,10).decode('utf-8')
+            user:User=User.query.get(current_user.id)
+            user.password=new_pass
+            db.session.commit()
+            logout_user()
+            return redirect("/user/login")
+    flash('error reseting password')
+    return redirect(request.referrer)
 
 @users.route("/restricted")
 def restricted():
