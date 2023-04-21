@@ -2,6 +2,8 @@
 
 {% block content %}
 
+{% include "update_business.html" %}
+
 <div class="d-flex flex-column">
     <div class="card border-secondary-subtle shadow m-2 p-2 d-flex flex-row" >
         <div class="d-flex flex-column flex-fill">
@@ -9,7 +11,7 @@
             <span class="text-muted">Hello, lets check some of your stats</span>
         </div>
         <div>
-            <a href="#" class="btn btn-dark rounded-pill m-2"> update profile</a>
+            <a href="#" class="btn btn-dark rounded-pill m-2" data-bs-toggle="modal" data-bs-target="#updateBusinessModal"> update profile</a>
         </div>        
     </div>
 
@@ -23,6 +25,10 @@
         <div class="text-center m-1 border rounded p-2">
             <b class="text-muted">username</b> <br>
             <span class="fw-bold fs-5">{{businessData().username}}</span>
+        </div>
+        <div class="text-center m-1 border rounded p-2">
+            <b class="text-muted">email</b> <br>
+            <span class="fw-bold fs-5">{{businessData().email}}</span>
         </div>
         <div class="text-center m-1 border rounded p-2">
             <b class="text-muted">address</b> <br>

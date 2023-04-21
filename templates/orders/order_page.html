@@ -61,10 +61,11 @@
 
     <!-- all items modal -->
     <div class="modal fade" id="itemsModal">
-        <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header fw-bold">Pick items Card  
-                    <form action="" class=" d-flex flex-row m-2">
+                <div class="modal-header fw-bold flex-wrap">
+                    <span class="me-5">Pick items Card  </span> 
+                    <form action="" class=" d-flex flex-row m-2 ms-0 flex-fill">
                         <input type="search" class="form-control shadow bg-secondary-subtle me-1" value="{{search}}" name="search" placeholder="search...">
                         <button type="submit" class="btn btn-primary"> <i class="fa-solid fa-magnifying-glass"></i></button>
                     </form>                    
@@ -98,7 +99,7 @@
     {% for item in items %}
         <!-- add item modal -->
         <div class="modal fade" id="addItem-{{item.id}}"  >
-            <div class="modal-dialog ">
+            <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header fw-bold border-0">Add Item Card</div>
                 <form action="" method="post">
@@ -123,13 +124,15 @@
 
         <!-- delete item modal for each item -->
         <div class="modal fade" id="deleteDialog-{{item.id}}">
-            <div class="modal-dialog modal-content modal-sm">
+            <div class="modal-dialog modal-sm modal-dialog-centered">
+              <div class="modal-content">
                 <div class="modal-header border-0 fw-bold">{{item.name}}</div>
                 <div class="modal-body text-muted">are you sure you want to delete this item</div>
                 <div class="modal-footer justify-content-between">
                     <button class="btn btn-outline-dark rounded-pill" data-bs-dismiss="modal">cancel</button>
                     <a href="/orders/{{order.id}}/{{item.id}}" class="btn btn-danger rounded-pill">delete</a>
                 </div>
+              </div>
             </div>
         </div>
     {% endfor %}

@@ -5,6 +5,7 @@ flask_admin
 flask_migrate
 flask_bcrypt
 flask_marshmallow
+flask_mail
 shortuuid
 psycopg2
 sqlalchemy
