@@ -4,6 +4,7 @@ from flask_login import login_required,current_user
 from models.business import Business
 from models.item import Item,db
 from models.customer import Customer
+from utils import custom_login_required
 
 
 dashboard=Blueprint("dashboard",__name__,url_prefix="",template_folder="../templates/dashboard")
@@ -33,6 +34,9 @@ def index_route():
 @dashboard.route("/<type>",methods=["POST","GET"])
 @login_required
 def items_route(type):
+    print(type)
+    if not (type == 'product' or type == 'service'):  
+        return redirect('/')
 
     if request.method=="POST":
         name=request.form.get("name")

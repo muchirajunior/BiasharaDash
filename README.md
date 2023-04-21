@@ -1,6 +1,12 @@
 # Biashara Dash
 A monolith dashboard 
 
+### user roles
+- account user roles
+```
+    admin | manager | user
+```
+
 ### installations
 - to install all the requirements run the command
 ```

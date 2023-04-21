@@ -5,7 +5,11 @@
  <div class="container">
     <div class="card mx-auto p-2 shadow m-2 mt-5 " style="max-width: 35rem;">
         <h4 class="fw-bold mb-3">Hello {{current_user.name}}</h4>
+        {% if current_user.business_id== None %}
         <p class="text-muted mb-5"> You are seeing this page because your account has not been connected to any business. please contact admin to resolve the issue.</p>
+        {% elif current_user.active== False %}
+        <p class="text-muted mb-5">you are seeing this page because your account has been set inactive. please contact your admin to resolve the issue</p>
+        {% endif %}
         <div class="d-flex justify-content-between ">
             <a href="/" class="btn btn-dark rounded-pill w-50 me-2"> Home </a>
             <a href="#" class="btn btn-outline-danger rounded-pill w-50"> contact us </a>

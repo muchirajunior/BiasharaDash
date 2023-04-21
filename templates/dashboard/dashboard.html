@@ -2,7 +2,7 @@
 
 {% block body %}
 
-{% if current_user.business_id == None %}
+{% if current_user.business_id == None or current_user.active == False%}
     <!-- check for unassigned user -->
     {% include "missing_business.html" %}
 
@@ -27,7 +27,7 @@
                    
                 </ul>
                 <form action="" class="w-100">
-                    <input class="form-control shadow border-secondary-subtle w-50 mx-auto rounded-pill" name="search" type="search" placeholder="Search" maxlength="20" aria-label="Search"> 
+                    <input class="form-control shadow border-secondary-subtle w-50 mx-auto rounded-pill" name="search" id="search" type="search" placeholder="Search" maxlength="20" aria-label="Search"> 
                  </form>
                 <div class="d-flex flex-column ms-2 me-2 justify-content-center align-items-center">
                     <span class="fw-bold fs-5">{{current_user.name}}</span>
@@ -83,6 +83,10 @@
       <button type="button" class="btn-close shadow" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body flex-fill">
+        <form action="" class=" d-flex flex-row m-2 ms-0">
+            <input type="search" class="form-control shadow bg-secondary-subtle me-1" id="search" name="search" placeholder="search...">
+            <button type="submit" class="btn btn-primary"> <i class="fa-solid fa-magnifying-glass"></i></button>
+        </form>   
         <span class="text-muted fw-bold">main menu</span>
         <hr class="m-0">
         <a href="/dashboard" class="nav-link text-muted fw-bold m-3"> <i class="fa-brands fa-microsoft me-1"></i> Dashboard </a>
@@ -119,5 +123,18 @@
 
 {% endif %}
 
+<script>
+    const urlParams= new URLSearchParams(window.location.search)
+    const search = urlParams.get('search')
+    console.log(search);
+    if(search != null){
+        const searchInputs=document.getElementsByName('search');
+        searchInputs.forEach(element => {
+            element.value=search;
+        });
+    }
+</script>
+
 
 {% endblock %}
+

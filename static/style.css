@@ -66,23 +66,19 @@
   .menu-nav{
     display: none;
   }
- 
 
 }
 
-@media screen and (max-width:600px) {
+@media screen and (max-width:800px) {
   .table-row{
     display: none;
   }
   
   .table-card{
     display: block;
-  }
-
-  .table-body{
-    display: flex !important;
-    flex-direction: column !important;
-    flex-wrap: wrap;
+    min-width: 18rem;
+    max-width: 25rem;
+    width: auto;
   }
 }
   

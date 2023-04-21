@@ -8,7 +8,8 @@ class User(db.Model,UserMixin):
     name:str=db.Column(db.String(50))
     email:str=db.Column(db.String(20),unique=True,nullable=False)
     password:str=db.Column(db.String(200),nullable=False)
-    role:str=db.Column(db.String(20),default="business") #user/admin
+    role:str=db.Column(db.String(20),default="user") #user/admin/manager
+    active=db.Column(db.Boolean,default=True)
     otp:int=db.Column(db.Integer)
     created_at=db.Column(db.DateTime,default=datetime.now())
     updated_at=db.Column(db.DateTime)
