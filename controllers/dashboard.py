@@ -45,6 +45,8 @@ def items_route(type):
         db.session.add(Item(name,price,description,stock,photo,type,cartegory,current_user.business_id))
         db.session.commit()
 
+        return  redirect(f"/{type}")
+
     
     cartegories=Business.query.filter_by(id=current_user.business_id).first().items_cartegories
     if (request.args.get('search') != None):
@@ -116,6 +118,8 @@ def customers_route():
         address=request.form.get('address')
         db.session.add(Customer(name,address,phone,email,current_user.business_id))
         db.session.commit()
+
+        return redirect('/customers')
     search=''
     if (request.args.get('search') != None):
         search=request.args.get('search')

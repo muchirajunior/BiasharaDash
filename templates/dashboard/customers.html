@@ -12,7 +12,8 @@
   
   <!-- add item modal -->
   <div class="modal fade" id="addCustomer" data-bs-backdrop="static" >
-    <div class="modal-dialog modal-content" >
+    <div class="modal-dialog" >
+      <div class="modal-content">
       <div class="modal-header border-0 fw-bold"> Add Customer </div>
       <form action="" method="post" >
         <div class="modal-body">
@@ -31,6 +32,7 @@
           <button type="submit" class="btn btn-primary">submit</button>
         </div>
       </form>
+      </div>
     </div>
   </div>
 
@@ -51,7 +53,8 @@
 
       <!-- update item modal for each item -->
       <div class="modal fade" id="customerModal-{{customer.id}}">
-        <div class="modal-dialog modal-content">
+        <div class="modal-dialog ">
+         <div class="modal-content">
           <div class="modal-header border-0 fw-bold"> Customer Card </div>
           <form action="/customers/{{customer.id}}" method="post">
             <div class="modal-body">
@@ -70,13 +73,14 @@
               <button type="submit" class="btn btn-primary">submit</button>
             </div>
           </form>
-
+         </div>
         </div>
       </div>
 
       <!-- delete item modal for each item -->
       <div class="modal fade" id="deleteDialog-{{customer.id}}">
-        <div class="modal-dialog modal-content modal-sm">
+        <div class="modal-dialog modal-sm">
+          <div class="modal-content">
           <div class="modal-header border-0 fw-bold">{{customer.name}}</div>
           <div class="modal-body text-muted">are you sure you want to delete this customer</div>
           <div  class="modal-footer justify-content-between">
@@ -84,11 +88,13 @@
             <a href="/customers/{{customer.id}}/delete" class="btn btn-danger rounded-pill">delete</a>
           </div>
         </div>
+        </div>
       </div>
 
        <!-- add order customer modal for each item -->
        <div class="modal fade" id="createOrderDialog-{{customer.id}}">
-        <div class="modal-dialog modal-content modal-sm">
+        <div class="modal-dialog modal-sm">
+          <div class="modal-content">
           <div class="modal-header border-0 fw-bold">{{customer.name}}</div>
           <div class="modal-body text-muted">Create a new order for this customer</div>
           <form action="/orders/add" method="post">
@@ -98,6 +104,7 @@
                 <button type="submit" class="btn btn-primary rounded-pill">create</button>
               </div>
           </form>
+          </div>
         </div>
       </div>
       
