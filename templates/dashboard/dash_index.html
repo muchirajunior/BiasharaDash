@@ -9,9 +9,47 @@
             <span class="text-muted">Hello, lets check some of your stats</span>
         </div>
         <div>
-            <a href="#" class="btn btn-dark rounded-pill m-2"> export data</a>
+            <a href="#" class="btn btn-dark rounded-pill m-2"> update profile</a>
         </div>        
     </div>
+
+    <b class="ms-2">Business Info</b>
+    <div class="card border-0 shadow d-flex flex-row flex-wrap m-2 p-2">
+        <div class="text-center m-1 border rounded p-2">
+            <b class="text-muted">name</b> <br>
+            <span class="fw-bold fs-5">{{businessData().name}}</span>
+        </div>
+
+        <div class="text-center m-1 border rounded p-2">
+            <b class="text-muted">username</b> <br>
+            <span class="fw-bold fs-5">{{businessData().username}}</span>
+        </div>
+        <div class="text-center m-1 border rounded p-2">
+            <b class="text-muted">address</b> <br>
+            <span class="fw-bold fs-5">{{businessData().address}}</span>
+        </div>
+
+        <div class="text-center m-1 border rounded p-2">
+            <b class="text-muted">phone</b> <br>
+            <span class="fw-bold fs-5">{{businessData().phone}}</span>
+        </div>
+
+        <div class="text-center m-1 border rounded p-2">
+            <b class="text-muted">cartegory</b> <br>
+            <span class="fw-bold fs-5">{{businessData().cartegory}}</span>
+        </div>
+
+        <div class="text-center m-1 border rounded p-2">
+            <b class="text-muted">pdf menu</b> <br>
+            <span class="fw-bold fs-5">{{businessData().pdf_menu}}</span>
+        </div>
+
+        <div class="text-center m-1 border rounded p-2">
+            <b class="text-muted">website</b> <br>
+            <span class="fw-bold fs-5">{{businessData().website}}</span>
+        </div>
+    </div>
+
     <div class="border-secondary-subtle shadow p-2 m-2  row" >
 
         <div class="card p-2 shadow m-2 d-flex flex-row" style="max-width: 20rem;"> 
@@ -62,10 +100,10 @@
                 <span class="fw-bold fs-2">40000</span>
             </div>            
         </div>
-
-
         
     </div>
+
+    
 </div>
 
 {% endblock %}

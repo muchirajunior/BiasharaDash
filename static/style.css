@@ -50,10 +50,39 @@
 .menu-nav{
     display: flex;
 }
+
+.table-row{
+  display: table-row;
+}
+
+.table-card{
+  display: none;
+}
+.table-body{
+  width: auto;
+}
   
 @media screen and (max-width:992px) {
   .menu-nav{
     display: none;
+  }
+ 
+
+}
+
+@media screen and (max-width:600px) {
+  .table-row{
+    display: none;
+  }
+  
+  .table-card{
+    display: block;
+  }
+
+  .table-body{
+    display: flex !important;
+    flex-direction: column !important;
+    flex-wrap: wrap;
   }
 }
   

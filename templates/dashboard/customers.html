@@ -5,7 +5,10 @@
 
 
 <div class="card p-2">
+  <div class="d-flex flex-row justify-content-between align-items-center">
     <div class="m-2 fw-bold fs-4">customers</div>
+    <span><button class="btn btn-primary" data-bs-target="#addCustomer" data-bs-toggle="modal" >add new </button></span>
+  </div>
   
   <!-- add item modal -->
   <div class="modal fade" id="addCustomer" data-bs-backdrop="static" >
@@ -40,7 +43,6 @@
         <th scope="col">email</th>
         <th scope="col">address</th>
         <th scope="col">actions</th>
-        <th> <button class="btn btn-primary" data-bs-target="#addCustomer" data-bs-toggle="modal" >add new </button></th>
       </tr>
 
     </thead>
@@ -50,7 +52,7 @@
       <!-- update item modal for each item -->
       <div class="modal fade" id="customerModal-{{customer.id}}">
         <div class="modal-dialog modal-content">
-          <div class="modal-header border-0 fw-bold"> Item Card </div>
+          <div class="modal-header border-0 fw-bold"> Customer Card </div>
           <form action="/customers/{{customer.id}}" method="post">
             <div class="modal-body">
                 <label for="">name</label>

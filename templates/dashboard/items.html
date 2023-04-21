@@ -5,7 +5,11 @@
 
 
 <div class="card p-2">
-  <div class="m-2 fw-bold fs-4">{{type}}s </div>
+  <div class="d-flex flex-row justify-content-between align-items-center">
+    <div class="m-2 fw-bold fs-4">{{type}}s</div>
+    <span><button class="btn btn-primary" data-bs-target="#addItem" data-bs-toggle="modal" >add new </button></span>
+  </div>
+  <div class="m-2 fw-bold fs-4"> </div>
   <!-- add item modal -->
   <div class="modal fade" id="addItem" data-bs-backdrop="static" >
     <div class="modal-dialog modal-content" >
@@ -44,7 +48,7 @@
 
   <table class="table">
     <thead class="">
-      <tr class="bg-light m-2">
+      <tr class="bg-light m-2 table-row">
         <th scope="col">#</th>
         <th scope="col">item</th>
         <th scope="col">price</th>
@@ -52,11 +56,10 @@
         <th scope="col">cartegory</th>
         <th scope="col">active</th>
         <th scope="col">actions</th>
-        <th> <button class="btn btn-primary" data-bs-target="#addItem" data-bs-toggle="modal" >add new </button></th>
       </tr>
 
     </thead>
-    <tbody class="">
+    <tbody class="table-body">
       {% for item in items%}
 
       <!-- update item modal for each item -->
@@ -110,11 +113,43 @@
           </div>
         </div>
       </div>
+
+      <!-- mobile item card -->
+      <div class="card table-card m-2" style="max-width: 22rem;">
+        <img src="{{url_for('static',filename="/images/item.png")}}" class="card-img-top bg-primary-subtle"  style="max-height: 250px;" alt="...">
+          <h5 class="card-title m-2">{{item.name}}</h5>
+          <div class="card shadow border-secondary-subtle d-flex flex-row p-2 m-2 justify-content-between">
+            <div class="text-center me-1">
+              <b>price</b> <br>
+              <span>{{item.price}}</span>
+            </div>
+            <div class="text-center me-1">
+              <b>stock</b> <br>
+              <span>{{item.stock}}</span>
+            </div>
+            <div class="text-center me-1">
+              <b>cartegory</b> <br>
+              <span>{{item.cartegory}}</span>
+            </div>
+            <div class="text-center me-1">
+              <b>active</b> <br>
+              <span>{{item.active}}</span>
+            </div>
+          </div>   
+        <div class="card-footer d-flex justify-content-between">
+          <button  class="btn btn-primary" data-bs-target="#itemDialog-{{item.id}}" data-bs-toggle="modal" >update</button>
+          <button class="btn btn-danger" data-bs-target="#deleteDialog-{{item.id}}" data-bs-toggle="modal">delete</button>
+        </div>
+        
+      </div>
+
       
       <!-- item row in the table -->
-      <tr class="m-2 shadow rounded border-secondary-subtle" data-bs-target="#itemDialog-{{item.id}}"
+      <tr class="m-2 shadow rounded border-secondary-subtle table-row" data-bs-target="#itemDialog-{{item.id}}"
         data-bs-toggle="modal">
-        <th scope="row">{{item.id}}</th>
+        <th scope="row">
+          <img src="{{url_for('static',filename="/images/item.png")}}" class="img-fluid rounded-circle bg-primary-subtle" width="50px" alt="" srcset="">
+        </th>
         <td>{{item.name}}</td>
         <td>{{item.price}}</td>
         {% if item.type=="product" %}
