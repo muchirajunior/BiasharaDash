@@ -25,8 +25,9 @@ def business_api(username:str):
 @business.route("/profile",methods=['POST','GET'])
 @login_required
 def profile():
-    business:Business = Business.query.get(current_user.id)
+    business:Business = Business.query.get(current_user.business_id)
     if(business== None):
+        print("business here",business)
         return redirect(request.referrer)
     if request.method == 'POST':
         business.name=request.form.get('name')
