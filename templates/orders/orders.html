@@ -4,7 +4,8 @@
 
 <!-- add order modal -->
 <div class="modal fade" id="addOrderModal" data-bs-backdrop="static">
-    <div class="modal-dialog modal-content" >
+    <div class="modal-dialog" >
+      <div class="modal-content">
         <div class="modal-header border-0 fw-bold fs-4">add new order</div>
         <form class="" action="/orders/add" method="post">
             <div class="modal-body">
@@ -14,14 +15,25 @@
             <div class="modal-footer justify-content-between">
                 <button  class="btn btn-dark " data-bs-dismiss="modal">cancel</button>
                 <button type="submit" class="btn btn-primary ">add new</button>
-            </div>
-            
+            </div> 
         </form>
+      </div>
     </div>
 </div>
 
+<!-- page body -->
 <div class="card p-2">
-  <div class="m-2 fw-bold fs-4">orders</div>
+    <div class="d-flex flex-row justify-content-between align-items-center flex-wrap">
+      <div class="m-2 fw-bold fs-4">orders</div>
+      <div class="d-flex flex-row"> 
+        <button  class="btn btn-primary" data-bs-target="#addOrderModal" data-bs-toggle="modal">add new</button>
+        <form action="" class="d-flex flex-row" method="post">
+          <input type="date" class="form-control ms-2 me-2 shadow" name="date" value="{{date}}" required>
+          <button type="submit" class="btn btn-outline-dark " >filter</button>
+        </form>
+      </div>
+    </div>
+  
     <table class="table">
         <thead>
           <tr>
@@ -30,13 +42,6 @@
             <th scope="col">Total</th>
             <th scope="col">Date Time</th>
             <th>Action</th>
-            <th class="d-flex flex-row">
-              <button  class="btn btn-primary" data-bs-target="#addOrderModal" data-bs-toggle="modal">add new</button>
-              <form action="" class="d-flex flex-row" method="post">
-                <input type="date" class="form-control ms-2 me-2 shadow" name="date" value="{{date}}" required>
-                <button type="submit" class="btn btn-outline-dark " >filter</button>
-            </form>
-            </th>
           </tr>
         </thead>
         <tbody>

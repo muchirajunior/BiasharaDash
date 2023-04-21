@@ -80,7 +80,7 @@
         </div>
        
       </div>
-      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      <button type="button" class="btn-close shadow" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body flex-fill">
         <span class="text-muted fw-bold">main menu</span>
@@ -105,7 +105,8 @@
 
 <!-- logout dialog -->
 <div class="modal fade shadow" id="logoutDialog">
-    <div class="modal-dialog modal-content modal-sm">
+    <div class="modal-dialog modal-sm">
+     <div class=" modal-content">
       <div class="modal-header border-0 fw-bold mb-1">Confirm Action</div>
       <div class="modal-body text-muted">are you sure you want to logout</div>
       <div  class="modal-footer justify-content-between">
@@ -113,6 +114,7 @@
         <a href="{{url_for('users.logout')}}" class="btn btn-danger rounded-pill">logout</a>
       </div>
     </div>
+</div>
 </div>
 
 {% endif %}

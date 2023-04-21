@@ -63,7 +63,7 @@ def order_route(id):
 
     items=Item.query.filter(Item.business_id==current_user.business_id,Item.active,Item.name.like(f"%{search}%")).all()
     order_items=OrderItem.query.filter_by(order_id=order.id).all()
-    return render_template("order_page.html",order=order,order_items=order_items,items=items)
+    return render_template("order_page.html",order=order,order_items=order_items,items=items,search=search)
 
 @orders.route("/<id>/<itemid>")
 @login_required

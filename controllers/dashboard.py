@@ -18,7 +18,9 @@ def businessData():
 @dashboard.route("/")
 @login_required
 def index():
-
+    print(request.headers)
+    print(request.remote_addr)
+  
     return render_template("dash_index.html")
 
 
@@ -61,7 +63,8 @@ def products_update(type,id):
         item:Item=Item.query.filter_by(id=id).first()
         item.name=request.form.get("name")
         item.price=request.form.get("price")
-        item.stock=request.form.get("stock")
+        if request.form.get("stock") != '' :
+            item.stock=request.form.get("stock")
         item.description=request.form.get("description")
         if(request.form.get("cartegory") != None):
             item.cartegory=request.form.get("cartegory")

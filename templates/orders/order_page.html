@@ -1,114 +1,139 @@
 {% extends "dashboard.html" %}
 
 {% block content %}
-<!-- complete order modal -->
-<div class="modal fade" id="completeOrder">
-    <div class="modal-dialog modal-content modal-sm">
-    <div class="modal-header border-0 fw-bold">Confrim Complete</div>
-    <div class="modal-body text-muted">are you sure you want to complete this order</div>
-    <div  class="modal-footer justify-content-between">
-        <button class="btn btn-outline-dark rounded-pill" data-bs-dismiss="modal">cancel</button>
-        <a href="/orders/{{order.id}}/complete" class="btn btn-primary rounded-pill">complete</a>
-    </div>
-    </div>
-</div>
 
 <div class="card p-2">
     <div class="m-2 fw-bold fs-3  d-flex flex -row justify-content-between mb-3 shadow p-2">
-       <span>{{order.customer}}</span>  
-       <span> <button class="btn btn-primary" data-bs-target="#completeOrder" data-bs-toggle="modal">complete order </button> </span>
-       <span class="bg-primary-subtle p-2 rounded text-muted">Total: {{order.total}} </span>
+        <span>{{order.customer}}</span>
+        <span class="bg-primary-subtle p-2 rounded text-muted">Total: {{order.total}} </span>
     </div>
 
     {% for message in get_flashed_messages() %}
-      <div class="alert alert-danger alert-dismissible fade show">
-         {{ message }} 
-         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> 
-      </div>
+    <div class="alert alert-danger alert-dismissible fade show">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
     {% endfor %}
 
-    <div class="d-flex flex-row align-items-start"> 
-        <table class="table shadow rounded me-3">
-            <thead>
-              <tr>
+    <table class="table shadow rounded me-3">
+        <thead>
+            <tr>
                 <th>#id</th>
                 <th>name</th>
                 <th scope="col">price</th>
                 <th scope="col">quantity</th>
                 <th scope="col">action</th>
-              </tr>
-            </thead>
-            <tbody >
+            </tr>
+        </thead>
+        <tbody>
             {% for item in order_items %}
-                <!-- delete item modal for each item -->
-                <div class="modal fade" id="deleteDialog-{{item.id}}">
-                    <div class="modal-dialog modal-content modal-sm">
-                    <div class="modal-header border-0 fw-bold">{{item.name}}</div>
-                    <div class="modal-body text-muted">are you sure you want to delete this item</div>
-                    <div  class="modal-footer justify-content-between">
-                        <button class="btn btn-outline-dark rounded-pill" data-bs-dismiss="modal">cancel</button>
-                        <a href="/orders/{{order.id}}/{{item.id}}" class="btn btn-danger rounded-pill">delete</a>
-                    </div>
-                    </div>
-                </div>
-
-              <tr class="">
+            <tr class="">
                 <th scope="row">{{item.id}}</th>
                 <td>{{item.name}}</td>
                 <td>{{item.price}}</td>
                 <td>{{item.quantity}}</td>
-                <td class="row"><button class="btn btn-danger " data-bs-target="#deleteDialog-{{item.id}}" data-bs-toggle="modal"> remove </button> </td>
-              </tr>
+                <td class="row">
+                    <button class="btn btn-danger " data-bs-target="#deleteDialog-{{item.id}}" data-bs-toggle="modal"> remove </button>
+                </td>
+            </tr>
             {% endfor %}
-            </tbody>
-        </table>
+        </tbody>
+    </table>
 
-    <div class="card m-2" style="min-width: 250px;">
-      {% for item in items %}
+    <div class="d-flex flex-row justify-content-between">
+        <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#itemsModal">add item</button>
+        <button class="btn btn-primary" data-bs-target="#completeOrder" data-bs-toggle="modal">complete order </button>
+    </div>
 
+    <!-- complete order modal -->
+    <div class="modal fade" id="completeOrder">
+        <div class="modal-dialog modal-sm">
+          <div class="modal-content">
+            <div class="modal-header border-0 fw-bold">Confrim Complete</div>
+            <div class="modal-body text-muted">are you sure you want to complete this order</div>
+            <div class="modal-footer justify-content-between">
+                <button class="btn btn-outline-dark rounded-pill" data-bs-dismiss="modal">cancel</button>
+                <a href="/orders/{{order.id}}/complete" class="btn btn-primary rounded-pill">complete</a>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <!-- all items modal -->
+    <div class="modal fade" id="itemsModal">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header fw-bold">Pick items Card  
+                    <form action="" class=" d-flex flex-row m-2">
+                        <input type="search" class="form-control shadow bg-secondary-subtle me-1" value="{{search}}" name="search" placeholder="search...">
+                        <button type="submit" class="btn btn-primary"> <i class="fa-solid fa-magnifying-glass"></i></button>
+                    </form>                    
+                </div>
+                <div class="modal-body">
+                    
+                    {% for item in items %}
+                    <div class="card border-0 shadow mb-2 p-2">
+                        <div class="d-flex flex-row justify-content-between">
+                            <span class="fw-bold overflow-elipsis">{{item.name}}</span>
+                            {% if item.type =='product' and item.stock == None  or item.stock == 0%}
+                            {% else%}
+                            <button class="btn btn-outline-dark rounded-pill" data-bs-target="#addItem-{{item.id}}"
+                                data-bs-toggle="modal">add</button>
+                            {% endif %}
+                        </div>
+                        {% if item.type == 'product'%}
+                        <span class="text-muted">stock: {{item.stock}}</span>
+                        {% else %}
+                        <span class="text-muted">service</span>
+                        {% endif%}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    {% for item in items %}
         <!-- add item modal -->
-        <div class="modal fade" id="addItem-{{item.id}}" data-bs-backdrop="static">
-            <div class="modal-dialog modal-content">
-                <div class="modal-header fw-bold border-0">Add Item</div>
+        <div class="modal fade" id="addItem-{{item.id}}"  >
+            <div class="modal-dialog ">
+            <div class="modal-content">
+                <div class="modal-header fw-bold border-0">Add Item Card</div>
                 <form action="" method="post">
-                    <div class="modal-body card p-2">
+                    <div class="modal-body card m-2">
                         <label for="">item name</label>
                         <input type="text" name="name" class="form-control" value="{{item.name}}" readonly>
                         <label for="">price</label>
                         <input type="number" name="price" class="form-control" value="{{item.price}}" readonly>
                         <label for="">quantity</label>
-                        <input type="number" name="quantity" class="form-control" value="1"  min="1"  max="{{item.stock}}" required>
-                        <input type="number" name="item_id" class="visually-hidden" value="{{item.id}}" >
+                        <input type="number" name="quantity" class="form-control" value="1" min="1" max="{{item.stock}}" required>
+                        <input type="number" name="item_id" class="visually-hidden" value="{{item.id}}">
                     </div>
                     <div class="modal-footer justify-content-between">
-                        <button class="btn btn-dark rounded-pill" type="button" data-bs-dismiss="modal">cancel </button>
-                        <button class="btn btn-primary rounded-pill"  type="submit">submit </button>
+                        <button class="btn btn-dark rounded-pill" type="button" data-bs-dismiss="modal">cancel</button>
+                        <button class="btn btn-secondary rounded-pill" type="button" data-bs-toggle="modal" data-bs-target="#itemsModal">back to items</button>
+                        <button class="btn btn-primary rounded-pill" type="submit">submit </button>
                     </div>
                 </form>
             </div>
-        </div>
-
-
-
-        <div class="card border-0 shadow m-1 p-2">
-            <div class="d-flex flex-row justify-content-between">
-                <span class="fw-bold overflow-elipsis">{{item.name}}</span>
-                {% if item.type =='product' and item.stock == None %}
-                {% else%}
-                <button class="btn btn-outline-dark rounded-pill" data-bs-target="#addItem-{{item.id}}" data-bs-toggle="modal" >add</button>
-                {% endif %}
             </div>
-            {% if item.type == 'product'%}
-                <span class="text-muted">stock: {{item.stock}}</span>
-            {% else %}
-                <span class="text-muted">service</span>
-            {% endif%}
         </div>
-      {% endfor %}
-    </div>
-        
-    </div>
-    
+
+        <!-- delete item modal for each item -->
+        <div class="modal fade" id="deleteDialog-{{item.id}}">
+            <div class="modal-dialog modal-content modal-sm">
+                <div class="modal-header border-0 fw-bold">{{item.name}}</div>
+                <div class="modal-body text-muted">are you sure you want to delete this item</div>
+                <div class="modal-footer justify-content-between">
+                    <button class="btn btn-outline-dark rounded-pill" data-bs-dismiss="modal">cancel</button>
+                    <a href="/orders/{{order.id}}/{{item.id}}" class="btn btn-danger rounded-pill">delete</a>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
 </div>
 
 {% endblock %}

@@ -7,7 +7,7 @@ class Item(db.Model):
     name=db.Column(db.String(50),nullable=False)
     price=db.Column(db.Float,nullable=False)
     description=db.Column(db.String)
-    stock=db.Column(db.Integer)
+    stock=db.Column(db.Integer,default=0)
     type=db.Column(db.String(10),default="product")#product/service
     active=db.Column(db.Boolean,default=True)
     cartegory=db.Column(db.String(20))

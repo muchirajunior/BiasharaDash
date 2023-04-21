@@ -9,6 +9,7 @@ class User(db.Model,UserMixin):
     email:str=db.Column(db.String(20),unique=True,nullable=False)
     password:str=db.Column(db.String(200),nullable=False)
     role:str=db.Column(db.String(20),default="business") #user/admin
+    otp:int=db.Column(db.Integer)
     created_at=db.Column(db.DateTime,default=datetime.now())
     updated_at=db.Column(db.DateTime)
     business_id=db.Column(db.Integer,db.ForeignKey('businesses.id'))
