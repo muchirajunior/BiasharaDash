@@ -15,14 +15,18 @@ class Business(db.Model):
     pdf_menu=db.Column(db.String(200))
     website=db.Column(db.String(300))
     subscription=db.Column(db.Float,default=100)
+    subscription_type=db.Column(db.String(10),default='standard') #standard/premium
     active=db.Column(db.Boolean,default=True)
     items_cartegories=db.Column(JSON,default=[])
+    items_count=db.Column(db.Integer)
+    today_order_count=db.Column(db.Integer)
     created_at=db.Column(db.DateTime,default=datetime.now())
     updated_at=db.Column(db.DateTime)
     users=db.relationship("User",backref='businesses',lazy=True)
     items=db.relationship("Item",backref='businesses',lazy=True)
     orders=db.relationship("Order",backref='businesses',lazy=True)
     customers=db.relationship("Customer",backref='businesses',lazy=True)
+    traffic=db.relationship("Traffic",backref='businesses',lazy=True)
 
     def __init__(self,name,username,address,cartegory,phone):
         self.name=name

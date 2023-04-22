@@ -13,6 +13,7 @@ from models.order_items import OrderItem
 from models.cartegory import Cartegory
 from models.message import Message
 from models.customer import Customer
+from models.traffic import Traffic
 
 #declare and initialize login manager for the flask app
 login_manager = LoginManager()
@@ -69,6 +70,7 @@ admin.add_view( AdminModelView(OrderItem, db.session))
 admin.add_view( AdminModelView(Cartegory, db.session))
 admin.add_view( AdminModelView(Message, db.session))
 admin.add_view( AdminModelView(Customer, db.session))
+admin.add_view( AdminModelView(Traffic, db.session))
 
 if __name__=="__main__":
     create_super_user()

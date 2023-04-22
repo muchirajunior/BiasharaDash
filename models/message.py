@@ -1,3 +1,4 @@
+from datetime import datetime
 from main import db
 
 class Message(db.Model):
@@ -9,6 +10,8 @@ class Message(db.Model):
     message=db.Column(db.String(500),nullable=False)
     cartegory=db.Column(db.String(30))
     read=db.Column(db.Boolean,default=False)
+    created_at=db.Column(db.DateTime,default=datetime.now())
+    updated_at=db.Column(db.DateTime)
     
 
     def __init__(self,sender,sender_id,receiver_id,message,carteory):
