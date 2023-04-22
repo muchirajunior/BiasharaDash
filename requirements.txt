@@ -8,5 +8,6 @@ flask_marshmallow
 flask_mail
 flask_cors
 shortuuid
-psycopg2
+psycopg2-binary
 sqlalchemy
+marshmallow-sqlalchemy
