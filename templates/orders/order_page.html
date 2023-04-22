@@ -2,11 +2,47 @@
 
 {% block content %}
 
-<div class="card p-2">
-    <div class="m-2 fw-bold fs-3  d-flex flex -row justify-content-between mb-3 shadow p-2">
-        <span>{{order.customer}}</span>
-        <span class="bg-primary-subtle p-2 rounded text-muted">Total: {{order.total}} </span>
+<!-- update order modal -->
+<div class="modal fade" id="updateOrderModal" data-bs-backdrop="static">
+    <div class="modal-dialog" >
+      <div class="modal-content">
+        <div class="modal-header border-0 fw-bold fs-4">add new order</div>
+        <form class="" action="/orders/{{order.id}}/update" method="post">
+            <div class="modal-body">
+                <label for="">Customer name *</label>
+                <input type="text" class="form-control " name="customer"  value="{{order.customer}}" maxlength="30" minlength="4"  required>
+                <label for="">contact</label>
+                <input type="text" class="form-control " name="contact"  value="{{order.contact}}" maxlength="50"  minlength="4" >
+                <label for="">Customer address</label>
+                <input type="text" class="form-control " name="address" value="{{order.address}}" maxlength="30" minlength="4">
+                <label for="">Delivery date</label>
+                <input type="date" class="form-control " name="delivery_date" value="{{order.delivery_date}}" maxlength="30" minlength="4" >
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button  class="btn btn-dark " type="button" data-bs-dismiss="modal">cancel</button>
+                <button type="submit" class="btn btn-primary ">submit</button>
+            </div> 
+        </form>
+      </div>
     </div>
+</div>
+
+<!-- page body -->
+<div class="card p-2">
+
+    <div class="card shadow border-secondary-subtle m-2 p-2">
+        <div class="fw-bold fs-3  d-flex flex -row justify-content-between mb-2">
+            <span>{{order.customer}}</span>
+            <span class="bg-primary-subtle p-2 rounded text-muted">Total: {{order.total}} </span>
+        </div>
+        <div class="d-flex flex-row justify-content-between flex-wrap text-muted fw-bold"> 
+            <span class="card p-1 m-1"> delivery date : {% if order.delivery_date != None and order.delivery_date != ''  %}{{order.delivery_date.strftime("%d-%m-%Y")}} {% endif %} </span>
+            <span class="card p-1 m-1"> customer contact : {{order.contact}} </span>
+            <span class="card p-1 m-1"> customer address : {{order.address}} </span>
+            <span><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateOrderModal">update</button></span>
+        </div>
+    </div>
+
 
     {% for message in get_flashed_messages() %}
     <div class="alert alert-danger alert-dismissible fade show">

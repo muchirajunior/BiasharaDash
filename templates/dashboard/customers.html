@@ -99,6 +99,8 @@
           <div class="modal-body text-muted">Create a new order for this customer</div>
           <form action="/orders/add" method="post">
             <input name="customer" class="visually-hidden" value="{{customer.name}}">
+            <input name="address" class="visually-hidden" value="{{customer.address}}">
+            <input name="contact" class="visually-hidden" value="{{customer.phone}}">
             <div  class="modal-footer justify-content-between">
                 <button type="button" class="btn btn-outline-dark rounded-pill" data-bs-dismiss="modal">cancel</button>
                 <button type="submit" class="btn btn-primary rounded-pill">create</button>

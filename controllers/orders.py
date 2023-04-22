@@ -1,5 +1,5 @@
 from datetime import datetime
-from flask import Blueprint, render_template,redirect,request,flash
+from flask import Blueprint, jsonify, render_template,redirect,request,flash
 from flask_login import current_user, login_required
 from models.order import Order,db
 from models.order_items import OrderItem
@@ -32,12 +32,52 @@ def orders_route():
     
     return render_template("orders.html",orders=business_orders,date=date)
 
+@orders.route("/create",methods=['POST'])
+def post_order_api():
+    try:
+        business_id=request.json.get('business_id')
+        customer=request.json.get('customer')
+        contact=request.json.get('contact')
+        address=request.json.get('address')
+        delivery_date=request.json.get('delivery_date')
+        items=request.json.get('items')
+        if (items != None):
+            order:Order = Order(customer,contact,address,0,delivery_date,business_id)
+            db.session.add(order)
+            db.session.commit()
+            for item in items:
+                order_item:OrderItem= OrderItem(
+                    name=item['name'],
+                    price=item['price'],
+                    quantity=item['quantity'],
+                    item_id=item['id'],
+                    order_id=order.id
+                )
+                db.session.add(order_item)
+                order.total+=order_item.quantity*order_item.price
+                db.session.commit()
+            return jsonify(message="order created successfully"),201
+        else:
+            return jsonify(message="order was not created",error='no items passed'),400
+        
+    except Exception as error:
+        return jsonify(error=str(error.args),messsage="error occured when creating order")
+
+
 @orders.route("/add",methods=['POST','GET'])
 @login_required
 def orders_add_route():
     if request.method == 'POST':
         customer=request.form.get('customer')
-        db.session.add(Order(customer,0,current_user.business_id))
+        contact=request.form.get('contact')
+        address=request.form.get('address')
+        delivery_date=request.form.get('delivery_date')
+        if delivery_date != None and delivery_date != '':
+            if ( datetime.strptime(delivery_date,'%Y-%m-%d') < datetime.now()):
+                flash("delivery date given is passed ! we have set it to null please open the order and  update")
+                delivery_date=None
+
+        db.session.add(Order(customer,contact,address,0,delivery_date,current_user.business_id))
         db.session.commit()
     return redirect('/orders')
 
@@ -80,6 +120,31 @@ def remove_item_route(id,itemid):
     db.session.commit()
 
     return redirect(request.referrer)
+
+@orders.route("/<id>/update",methods=['POST','GET'])
+@login_required
+def order_update_route(id):
+    try:
+        order:Order= Order.query.filter(Order.id==id,Order.sold ==False,Order.business_id==current_user.business_id).first()
+        if order == None :
+            return redirect(request.referrer)
+        if request.method =='POST':
+            order.customer=request.form.get('customer')
+            order.contact=request.form.get('contact')
+            order.address=request.form.get('address')
+            delivery_date=request.form.get('delivery_date')
+            if delivery_date != None and delivery_date != '':
+                if ( datetime.strptime(delivery_date,'%Y-%m-%d') < datetime.now()):
+                    flash("delivery date given is passed !")
+                else:
+                    order.delivery_date=delivery_date
+        
+            db.session.commit()
+    except:
+        flash('error updating order')    
+    
+    return redirect(f"/orders/{id}")
+
 
 @orders.route("/<id>/complete")
 @login_required
