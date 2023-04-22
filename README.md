@@ -65,3 +65,23 @@ app.config['SQLALCHEMY_DATABASE_URI']="your_database_connection_string"
 
     app.register_blueprint(blueprintName)
 ```
+
+### order api
+- this is the body for sample order for route `orders/create`
+```JSON
+    {
+    "customer":"junior customer",
+    "contact":"071234657",
+    "address":"Ruaka,NRB",
+    "delivery_date":"12-04-2023",
+    "business_id":1,
+    "items": [
+        {
+            "id": 1,
+            "name": "Test ",
+            "price": 100.0,
+            "quantity": 10
+        }
+    ]
+}
+```
