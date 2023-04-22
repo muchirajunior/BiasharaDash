@@ -4,6 +4,7 @@ from flask_login import login_required,current_user
 from models.business import Business
 from models.item import Item,db
 from models.customer import Customer
+from models.cartegory import Cartegory
 from utils import custom_login_required
 
 
@@ -28,8 +29,8 @@ def index():
 @dashboard.route("/dashboard/")
 @login_required
 def index_route():
-
-    return render_template("dash_index.html")
+    business_cartegories=Cartegory.query.all()
+    return render_template("dash_index.html",business_cartegories=business_cartegories)
 
 @dashboard.route("/<type>",methods=["POST","GET"])
 @login_required

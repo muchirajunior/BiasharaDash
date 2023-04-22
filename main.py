@@ -6,6 +6,7 @@ from flask_bcrypt import Bcrypt
 from flask_migrate import Migrate
 from flask_marshmallow import Marshmallow
 from flask_mail import Mail
+from flask_cors import CORS
 
 app=Flask(__name__)
 
@@ -24,5 +25,5 @@ db=SQLAlchemy(app)
 bcrypt=Bcrypt(app)
 migrate=Migrate(app,db)
 
-
+CORS(app)
 app.permanent_session_lifetime=timedelta(minutes=50) #user session lifetime
