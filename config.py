@@ -14,6 +14,10 @@ from models.cartegory import Cartegory
 from models.message import Message
 from models.customer import Customer
 from models.traffic import Traffic
+from utils import businessData
+
+#sets business data to global reach by jinja2 in all files
+app.jinja_env.globals.update(businessData=businessData)
 
 #declare and initialize login manager for the flask app
 login_manager = LoginManager()
