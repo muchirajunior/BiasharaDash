@@ -1,8 +1,9 @@
+import requests
 from flask import redirect,request
 from flask_login import login_required,current_user
-from flask_mail import Message
-from main import mail
 from models.business import Business
+from werkzeug.utils import secure_filename
+
 
 def custom_login_required(role):
     def wrapper(fn):
@@ -19,15 +20,33 @@ def custom_login_required(role):
 def businessData():
     try:
         business:Business=Business.query.filter_by(id=current_user.business_id).first()
-        print(business)
-        return business
-    except:
+        return business 
+
+    except Exception as error:
+        print("fetch business data error ::>"+str(error))
         return None
 
 def upload_file(file):
-    print(file)
+    try:
+        url = 'http://127.0.0.1:8000'# 'https://filesapi.biashara.buzz/'
+        filetype="image"
+        filename = secure_filename(file.filename)
+        ext=filename.rsplit('.',1)[1]
+        if ext=='pdf':
+            url+='/files'
+            filetype='pdf'
+        print(filename)
+        response = requests.post(url, files={filetype: file})
+        print(response.json())
+        if response.status_code==200:
+            return response.json()['filename']
+        else:
+            print('failed to upload file')
+            return None
 
-    return "filename"
+    except Exception as error:
+        print(str(error))
+        return None
 
 def sendMail(email,message):
     pass

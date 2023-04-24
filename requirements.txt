@@ -11,3 +11,4 @@ shortuuid
 psycopg2-binary
 sqlalchemy
 marshmallow-sqlalchemy
+requests

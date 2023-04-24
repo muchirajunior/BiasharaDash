@@ -2,6 +2,7 @@ from flask import Blueprint, render_template,jsonify,request,redirect
 from flask_login import login_required,current_user
 from models.business import Business,db
 from schemas import businessSchema
+from utils  import upload_file
 
 business=Blueprint("businesses",__name__,url_prefix="/business",template_folder="../templates/business")
 
@@ -37,12 +38,14 @@ def profile():
         business.phone=request.form.get('phone')
         if not(request.form.get('cartegory') == None or request.form.get('cartegory') ==''):
             business.cartegory=request.form.get('cartegory')
-        if (request.form.get('pdf_menu') != None):
-            #upload-file
-            business.pdf_menu=""
-        if (request.form.get('photo') != None):
-            #upload-file
-            business.photo=""
+        if (request.files['pdf_menu'] != None):
+            filename= upload_file(request.files['pdf_menu'])
+            if filename != None:
+                business.pdf_menu=filename
+        if (request.files['photo'] != None):
+            filename= upload_file(request.files['photo'])
+            if filename != None:
+                business.photo=filename
         db.session.commit()
     
     return redirect(request.referrer)

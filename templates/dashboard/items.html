@@ -15,7 +15,7 @@
     <div class="modal-dialog modal-dialog-centered">
       <div class=" modal-content">
         <div class="modal-header border-0 fw-bold"> Add Item Card </div>
-        <form action="" method="post">
+        <form action="" method="post" enctype="multipart/form-data">
           <div class="modal-body">
             <label for="">name</label>
             <input type="text" name="name" class="form-control" required minlength="4" maxlength="30">
@@ -70,7 +70,7 @@
         <div class="modal-dialog modal-dialog-centered">
           <div class=" modal-content">
             <div class="modal-header border-0 fw-bold"> Item Card </div>
-            <form action="/{{item.type}}/{{item.id}}" method="post">
+            <form action="/{{item.type}}/{{item.id}}" method="post" enctype="multipart/form-data">
               <div class="modal-body">
                 <label for="">name</label>
                 <input type="text" name="name" class="form-control" value="{{item.name}}" required minlength="4"
@@ -97,7 +97,7 @@
                   {% endif %}
                 </select>
                 <label for="">photo</label>
-                <input type="file" name="photo" class="form-control" accept=".jpg, .jpeg, .png" value="{{item.photo}}">
+                <input type="file" name="photo" class="form-control" accept=".jpg, .jpeg, .png" >
 
               </div>
               <div class="modal-footer justify-content-between">

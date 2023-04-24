@@ -5,7 +5,7 @@ from models.business import Business
 from models.item import Item,db
 from models.customer import Customer
 from models.cartegory import Cartegory
-from utils import custom_login_required
+from utils import custom_login_required,upload_file
 
 
 dashboard=Blueprint("dashboard",__name__,url_prefix="",template_folder="../templates/dashboard")
@@ -73,8 +73,12 @@ def products_update(type,id):
             item.active=True
         else:
             item.active=False
-        if(request.form.get("photo") != None):
-            item.photo=request.form.get("photo")
+        if(request.files["photo"] != None):
+            print(request.files["photo"])
+            filename= upload_file(request.files["photo"])
+            print(request.files["photo"])
+            if filename != None:
+                item.photo=filename
         item.updated_at=datetime.now()
         db.session.commit()
 

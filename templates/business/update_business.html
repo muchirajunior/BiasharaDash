@@ -5,7 +5,7 @@
                 Update Business Profile
                 <button class="btn-close shadow" data-bs-dismiss="modal"></button>
             </div>
-            <form action="/business/profile" method="post">
+            <form action="/business/profile" method="post" enctype="multipart/form-data">
                 <div class="modal-body">
                     <label for="">business name</label>
                     <input type="text" class="form-control" name="name" value="{{businessData().name}}" minlength="4"  maxlength="50" required>
