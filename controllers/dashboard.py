@@ -13,8 +13,8 @@ dashboard=Blueprint("dashboard",__name__,url_prefix="",template_folder="../templ
 @dashboard.route("/")
 @login_required
 def index():
-    print(request.headers)
-    print(request.remote_addr)
+    # print(request.headers)
+    print(  request.remote_addr)
   
     return render_template("dash_index.html")
 

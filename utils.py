@@ -1,10 +1,9 @@
-import requests
-from flask import redirect,request
+from flask import redirect,request,session
 from flask_login import login_required,current_user
 from models.business import Business
 from werkzeug.utils import secure_filename
-
-
+from shortuuid import uuid
+from PIL import Image
 def custom_login_required(role):
     def wrapper(fn):
         @login_required
@@ -19,8 +18,17 @@ def custom_login_required(role):
 #optimize to add it to session
 def businessData():
     try:
-        business:Business=Business.query.filter_by(id=current_user.business_id).first()
-        return business 
+        # current_time=datetime.now()
+        # last_query=session['last_query']
+
+        # if session.get('business')== None:
+        #     print("no session")
+        #     business:Business=Business.query.filter_by(id=current_user.business_id).first()
+        #     bs=business.__dict__
+        #     bs.pop('_sa_instance_state')
+        #     session['business']=bs
+        # return session['business'] 
+        return Business.query.filter_by(id=current_user.business_id).first()
 
     except Exception as error:
         print("fetch business data error ::>"+str(error))
@@ -28,21 +36,18 @@ def businessData():
 
 def upload_file(file):
     try:
-        url = 'http://127.0.0.1:8000'# 'https://filesapi.biashara.buzz/'
-        filetype="image"
+        path = '/home/muchirajunoir/Downloads/filesapi'
         filename = secure_filename(file.filename)
         ext=filename.rsplit('.',1)[1]
+        filename=uuid()+'.'+ext
         if ext=='pdf':
-            url+='/files'
-            filetype='pdf'
-        print(filename)
-        response = requests.post(url, files={filetype: file})
-        print(response.json())
-        if response.status_code==200:
-            return response.json()['filename']
+            file.save(f"{path}/pdfs/{filename}")
         else:
-            print('failed to upload file')
-            return None
+            image=Image.open(file)
+            image=image.resize((320,240))
+            image.save(f"{path}/images/{filename}")
+        
+        return filename
 
     except Exception as error:
         print(str(error))

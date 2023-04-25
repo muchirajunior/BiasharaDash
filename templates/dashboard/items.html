@@ -129,8 +129,13 @@
         data-bs-toggle="modal">
         <th scope="row"> {{item.id}} </th>
         <td >
-          <img src="{{url_for('static',filename="/images/item.png")}}"
+          {% if item.photo == None %}
+          <img  src="{{url_for('static',filename="/images/item.png")}}"
             class="img-fluid rounded-circle bg-primary-subtle" width="50px" alt="" srcset="">
+          {% else %}
+          <img  src="https://filesapi.biashara.buzz/{{item.photo}}"
+             class="img-fluid rounded-circle bg-primary-subtle" width="70px" alt="" srcset="">
+          {% endif %}
         </td>
         <td>{{item.name}}</td>
         <td>{{item.price}}</td>
@@ -154,8 +159,11 @@
     {% for item in items %}
          <!-- mobile item card -->
         <div class="card table-card m-2 mx-auto p-0">
-          <img src="{{url_for('static',filename="/images/item.png")}}" class="card-img-top bg-primary-subtle" style="max-height: 250px;" alt="...">
-
+          {% if item.photo == None %}
+            <img src="{{url_for('static',filename="/images/item.png")}}" class="card-img-top bg-primary-subtle" style="max-height: 250px;" alt="...">
+          {% else %}
+           <img src="https://filesapi.biashara.buzz/{{item.photo}}" class="card-img-top bg-primary-subtle" style="max-height: 250px;" alt="...">
+          {% endif %}
           <h5 class="card-title m-2 d-flex flex-row justify-content-between"> <span>{{item.name}}</span> <span>#{{item.id}}</span> </h5>
 
           <div class="card shadow border-secondary-subtle d-flex flex-row p-2 m-2 justify-content-between">
