@@ -129,7 +129,7 @@
         data-bs-toggle="modal">
         <th scope="row"> {{item.id}} </th>
         <td >
-          {% if item.photo == None %}
+          {% if not item.photo %}
           <img  src="{{url_for('static',filename="/images/item.png")}}"
             class="img-fluid rounded-circle bg-primary-subtle" width="50px" alt="" srcset="">
           {% else %}
@@ -159,7 +159,7 @@
     {% for item in items %}
          <!-- mobile item card -->
         <div class="card table-card m-2 mx-auto p-0">
-          {% if item.photo == None %}
+          {% if not item.photo %}
             <img src="{{url_for('static',filename="/images/item.png")}}" class="card-img-top bg-primary-subtle" style="max-height: 250px;" alt="...">
           {% else %}
            <img src="https://filesapi.biashara.buzz/{{item.photo}}" class="card-img-top bg-primary-subtle" style="max-height: 250px;" alt="...">
