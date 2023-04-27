@@ -6,7 +6,7 @@
     <!-- check for unassigned user -->
     {% include "missing_business.html" %}
 
-{% elif businessData().active == False %}
+{% elif businessData(load_session=False).active == False %}
     <!-- check for inactive business -->
     {% include "inactive_business.html" %}
 {% else %}

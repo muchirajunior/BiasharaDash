@@ -15,20 +15,16 @@ def custom_login_required(role):
     return wrapper
 
 
-#optimize to add it to session
-def businessData():
+#set load_session to false while invoking the db
+def businessData(load_session=True):
     try:
-        # current_time=datetime.now()
-        # last_query=session['last_query']
-
-        # if session.get('business')== None:
-        #     print("no session")
-        #     business:Business=Business.query.filter_by(id=current_user.business_id).first()
-        #     bs=business.__dict__
-        #     bs.pop('_sa_instance_state')
-        #     session['business']=bs
-        # return session['business'] 
-        return Business.query.filter_by(id=current_user.business_id).first()
+        if load_session and session.get('business') != None:
+            return session['business'] 
+        business:Business=Business.query.filter_by(id=current_user.business_id).first()
+        bs=business.__dict__
+        bs.pop('_sa_instance_state')
+        session['business']=bs
+        return business
 
     except Exception as error:
         print("fetch business data error ::>"+str(error))
