@@ -14,3 +14,9 @@ class BusinessSchema(ma.Schema):
 
 businessSchema=BusinessSchema()
 businessesSchema=BusinessSchema(many=True)
+
+class CartegorySchema(ma.Schema):
+    class Meta:
+        fields=('id','name','address_name')
+cartegorySchema=CartegorySchema()
+cartegoriesSchema=CartegorySchema(many=True)

@@ -1,7 +1,8 @@
 from flask import Blueprint, render_template,jsonify,request,redirect
 from flask_login import login_required,current_user
 from models.business import Business,db
-from schemas import businessSchema
+from models.cartegory import Cartegory
+from schemas import businessSchema,cartegorySchema
 from utils  import upload_file
 
 business=Blueprint("businesses",__name__,url_prefix="/business",template_folder="../templates/business")
@@ -20,8 +21,12 @@ def business_api(username:str):
         return jsonify(error='inactive business',message='the named business is inactive or out of service'),400
     
     bs=businessSchema.dump(business)
+    cart=None
+    if business.cartegory != None:
+        cartegory=Cartegory.query.filter_by(name=business.cartegory).first()
+        cart=cartegorySchema.dump(cartegory)
 
-    return jsonify(bs)
+    return jsonify(business=bs,cartegory=cart)
 
 @business.route("/profile",methods=['POST','GET'])
 @login_required
