@@ -15,7 +15,7 @@ class Business(db.Model):
     pdf_menu=db.Column(db.String(200))
     website=db.Column(db.String(300))
     subscription=db.Column(db.Float,default=100)
-    subscription_type=db.Column(db.String(10),default='standard') #standard/premium
+    subscription_type=db.Column(db.String(10),default='standard') #basic/standard/premium
     active=db.Column(db.Boolean,default=True)
     items_cartegories=db.Column(JSON,default=[])
     items_count=db.Column(db.Integer)

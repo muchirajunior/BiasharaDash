@@ -2,8 +2,10 @@ from flask import Blueprint, render_template,jsonify,request,redirect
 from flask_login import login_required,current_user
 from models.business import Business,db
 from models.cartegory import Cartegory
+from models.traffic import Traffic
 from schemas import businessSchema,cartegorySchema
 from utils  import upload_file
+from datetime import datetime
 
 business=Blueprint("businesses",__name__,url_prefix="/business",template_folder="../templates/business")
 
@@ -19,8 +21,10 @@ def business_api(username:str):
         return jsonify(error='not found',message='business with such username not found'),404
     elif business.active == False:
         return jsonify(error='inactive business',message='the named business is inactive or out of service'),400
-    
+    db.session.add(Traffic(source=request.remote_addr, user='customer',info="customer search",business=business.name,business_id=business.id ))
+    db.session.commit()
     bs=businessSchema.dump(business)
+    print(f"{str(datetime.now()).split('.')[0]},customer,{request.remote_addr},{request.remote_user}")
     cart=None
     if business.cartegory != None:
         cartegory=Cartegory.query.filter_by(name=business.cartegory).first()

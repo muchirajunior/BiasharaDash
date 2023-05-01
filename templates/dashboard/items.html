@@ -125,8 +125,7 @@
 
      
       <!-- item row in the table -->
-      <tr class="m-2 shadow rounded border-secondary-subtle table-row" data-bs-target="#itemDialog-{{item.id}}"
-        data-bs-toggle="modal">
+      <tr class="m-2 shadow rounded border-secondary-subtle table-row" >
         <th scope="row"> {{item.id}} </th>
         <td >
           {% if not item.photo %}
@@ -145,7 +144,7 @@
         <td>{{item.cartegory}}</td>
         <td>{{item.active}}</td>
         <td class="btn-group" role="group"></a>
-          <button class="btn btn-primary">update</button>
+          <button class="btn btn-primary" data-bs-target="#itemDialog-{{item.id}}"data-bs-toggle="modal">update</button>
           <button class="btn btn-danger" data-bs-target="#deleteDialog-{{item.id}}" data-bs-toggle="modal">delete</a>
         </td>
       </tr>

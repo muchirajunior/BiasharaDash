@@ -11,6 +11,7 @@ class Item(db.Model):
     type=db.Column(db.String(10),default="product")#product/service
     active=db.Column(db.Boolean,default=True)
     cartegory=db.Column(db.String(20))
+    vat=db.Column(db.Integer,default=0)
     photo=db.Column(db.String)
     photo_2=db.Column(db.String)
     photo_3=db.Column(db.String)

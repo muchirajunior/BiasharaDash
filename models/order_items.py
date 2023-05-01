@@ -6,6 +6,7 @@ class OrderItem(db.Model):
     name=db.Column(db.String(50),nullable=False)
     price=db.Column(db.Float,nullable=False)
     quantity=db.Column(db.Integer)
+    vat=db.Column(db.Float)
     item_id=db.Column(db.Integer)
     order_id=db.Column(db.Integer,db.ForeignKey("orders.id"),nullable=False)
 
