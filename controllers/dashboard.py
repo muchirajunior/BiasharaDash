@@ -14,16 +14,16 @@ dashboard=Blueprint("dashboard",__name__,url_prefix="",template_folder="../templ
 @login_required
 def index():
     # print(request.headers)
-    print(  request.remote_addr)
+    print(f"{current_user.business_id},{str(datetime.now()).split('.')[0]},{current_user.name},{request.remote_addr}")
   
-    return render_template("dash_index.html")
+    return render_template("business_dash.html")
 
 
 @dashboard.route("/dashboard/")
 @login_required
 def index_route():
     business_cartegories=Cartegory.query.all()
-    return render_template("dash_index.html",business_cartegories=business_cartegories)
+    return render_template("business_dash.html",business_cartegories=business_cartegories)
 
 @dashboard.route("/<type>",methods=["POST","GET"])
 @login_required
@@ -104,7 +104,7 @@ def item_cartegories_route():
         if business.items_cartegories== None or isinstance(business.items_cartegories,dict) :
             business.items_cartegories=[item]
         elif isinstance(business.items_cartegories,list):
-            business.items_cartegories=business.items_cartegories+[item] #conactinate arrays to add up
+            business.items_cartegories=business.items_cartegories+[item] #concatinate arrays to add up
         db.session.commit()
     return  redirect(request.referrer)
 

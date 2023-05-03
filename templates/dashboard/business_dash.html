@@ -11,7 +11,8 @@
             <span class="text-muted">Hello, lets check some of your stats</span>
         </div>
         <div>
-            <a href="#" class="btn btn-dark rounded-pill m-2" data-bs-toggle="modal" data-bs-target="#updateBusinessModal"> update profile</a>
+            <button  class="btn btn-dark rounded-pill m-2" data-bs-toggle="modal" data-bs-target="#exportBusinessDataModal"> export data</button>
+            <button  class="btn btn-dark rounded-pill m-2" data-bs-toggle="modal" data-bs-target="#updateBusinessModal"> update profile</button>
         </div>        
     </div>
 
@@ -22,7 +23,7 @@
         </div>
      {% endfor %}
 
-    <b class="ms-2">Business Info</b>
+    <b class="ms-4">Business Info</b>
     <div class="card border-0 shadow d-flex flex-row flex-wrap m-2 p-2">
         <div class="text-center m-1 border rounded p-2">
             <b class="text-muted">name</b> <br>
@@ -62,8 +63,8 @@
             <span class="fw-bold fs-5">{{businessData().website}}</span>
         </div>
     </div>
-
-    <div class="border-secondary-subtle shadow p-2 m-2  row" >
+    <div class="fw-bold ms-4">Business Stats</div>
+    <div class="border-secondary-subtle shadow p-2 m-2 mt-1  row" >
 
         <div class="card p-2 shadow m-2 d-flex flex-row" style="max-width: 20rem;"> 
             <span class="rounded-circle p-3 m-1 bg-primary text-white"><i class="fa-solid fa-palette fs-2"></i></span>
