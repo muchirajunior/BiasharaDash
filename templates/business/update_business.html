@@ -14,7 +14,7 @@
                     <input type="text" class="form-control" value="{{businessData().username}}" readonly>
 
                     <label for="">email</label>
-                    <input type="text" class="form-control" name="email" value="{{businessData().email}}" minlength="4" maxlength="50">
+                    <input type="email" class="form-control" name="email" value="{{businessData().email}}" minlength="4" maxlength="50">
 
                     <label for="">address</label>
                     <input type="text" class="form-control" name="address" value="{{businessData().address}}" minlength="4" maxlength="200">
@@ -42,7 +42,7 @@
                     <input type="file" class="form-control" name="photo" accept=".jpg, .jpeg, .png" value="{{businessData().photo}}" >
                 </div>
                 <div class="modal-footer d-flex flex-row justify-content-between">
-                    <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">cancel</button>
+                    <button class="btn btn-dark" type="button" data-bs-dismiss="modal">cancel</button>
                     <button class="btn btn-primary" type="submit" >submit</button>
 
                 </div>

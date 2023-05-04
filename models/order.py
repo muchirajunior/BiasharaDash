@@ -9,6 +9,8 @@ class Order(db.Model):
     address=db.Column(db.String(100))
     delivery_date=db.Column(db.DateTime)
     total=db.Column(db.Float)
+    vat=db.Column(db.Float)
+    discount=db.Column(db.Float)
     sold=db.Column(db.Boolean,default=False)
     created_at=db.Column(db.DateTime,default=datetime.now())
     updated_at=db.Column(db.DateTime)

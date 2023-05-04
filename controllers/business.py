@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template,jsonify,request,redirect
+from flask import Blueprint, flash, render_template,jsonify,request,redirect
 from flask_login import login_required,current_user
 from models.business import Business,db
 from models.cartegory import Cartegory
@@ -57,4 +57,11 @@ def profile():
                 business.photo=filename
         db.session.commit()
     
+    return redirect(request.referrer)
+
+@business.route("/export-data",methods=['POST','GET'])
+@login_required
+def export_data():
+    flash("process under maitenance !!")
+
     return redirect(request.referrer)
