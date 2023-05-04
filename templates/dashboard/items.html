@@ -3,6 +3,12 @@
 {% block content %}
 
 
+{% for message in get_flashed_messages() %}
+<div class="alert alert-danger alert-dismissible fade show">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
 
 <div class="card p-2">
   <div class="d-flex flex-row justify-content-between align-items-center">
@@ -88,6 +94,15 @@
                 <input type="checkbox" class="m-3" name="active" {% if item.active %} checked="{{item.value}}" {% endif
                   %} id="">
                 <br>
+                <label for="">VAT cartegory (current:{{item.vat}}%)</label>
+                <select name="vat" id="" class="form-select">
+                  <option value="" selected disabled>select vat</option>
+                  <option value="0">0% VAT</option>
+                  <option value="4">4% VAT</option>
+                  <option value="8">8% VAT</option>
+                  <option value="16">16% VAT</option>
+                </select>
+                <label for="">item cartegory</label>
                 <select name="cartegory" id="" class="form-select">
                   <option value="{{item.cartegory}}" selected disabled>select cartegory</option>
                   {% if cartegories != None %}

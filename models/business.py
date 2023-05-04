@@ -19,7 +19,9 @@ class Business(db.Model):
     active=db.Column(db.Boolean,default=True)
     items_cartegories=db.Column(JSON,default=[])
     items_count=db.Column(db.Integer)
-    today_order_count=db.Column(db.Integer)
+    today_orders=db.Column(db.Integer) #total orders today
+    max_items=db.Column(db.Integer,default=50) #maximumn number of items the business can have
+    max_orders=db.Column(db.Integer,default=100) #maximum number of order per day
     created_at=db.Column(db.DateTime,default=datetime.now())
     updated_at=db.Column(db.DateTime)
     users=db.relationship("User",backref='businesses',lazy=True)

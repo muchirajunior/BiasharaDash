@@ -18,7 +18,7 @@
 <!--page body  -->
 <div class="card p-2">
   <div class="card shadow border-secondary-subtle m-2 p-2">
-    <div class="fw-bold fs-3  d-flex flex -row justify-content-between mb-2">
+    <div class="fw-bold fs-3  d-flex flex -row justify-content-between flex-wrap mb-2">
         <span>{{order.customer}}</span>
         <span class="bg-primary-subtle p-2 rounded text-muted">Total: {{order.total}} </span>
     </div>
@@ -26,7 +26,9 @@
         <span class="card p-1 m-1"> delivery date : {% if order.delivery_date != None and order.delivery_date != ''  %}{{order.delivery_date.strftime("%d-%m-%Y")}} {% endif %} </span>
         <span class="card p-1 m-1"> customer contact : {{order.contact}} </span>
         <span class="card p-1 m-1"> customer address : {{order.address}} </span>
+        <span class="card p-1 m-1"> total vat : {{order.vat}} </span>
         <span><button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#reverseSale">reverse sale</button></span>
+        <span><button class="btn btn-dark"> print sale </button></span>
     </div>
 </div>
 
@@ -46,6 +48,7 @@
           <th>name</th>
           <th scope="col">price</th>
           <th scope="col">quantity</th>
+          <th scope="col">VAT</th>
           <th scope="col">action</th>
         </tr>
       </thead>
@@ -56,6 +59,7 @@
           <td>{{item.name}}</td>
           <td>{{item.price}}</td>
           <td>{{item.quantity}}</td>
+          <td>{{item.vat}}</td>
         </tr>
         {% endfor %}
       </tbody>

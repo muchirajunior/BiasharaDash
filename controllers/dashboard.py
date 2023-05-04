@@ -1,5 +1,5 @@
 from datetime import datetime
-from flask import Blueprint, render_template,request,redirect
+from flask import Blueprint, flash, render_template,request,redirect
 from flask_login import login_required,current_user
 from models.business import Business
 from models.item import Item,db
@@ -33,6 +33,12 @@ def items_route(type):
         return redirect('/')
 
     if request.method=="POST":
+        business:Business=Business.query.get(current_user.business_id)
+        count=Item.query.filter(Item.business_id==current_user.business_id).count()
+        print(count)
+        if count >= business.max_items:
+            flash('you have reached the maximum Items you can upload. upgrade for to increase your limit!')
+            return redirect(request.referrer)
         name=request.form.get("name")
         price=request.form.get("price")
         stock=request.form.get("stock")
@@ -41,6 +47,7 @@ def items_route(type):
         photo=request.form.get("photo")
 
         db.session.add(Item(name,price,description,stock,photo,type,cartegory,current_user.business_id))
+        business.items_count=count
         db.session.commit()
 
         return  redirect(f"/{type}")
@@ -58,7 +65,6 @@ def items_route(type):
 @dashboard.route("/<type>/<id>",methods=["POST"])
 @login_required
 def products_update(type,id):
-   
     if request.method=="POST":
         item:Item=Item.query.filter_by(id=id).first()
         item.name=request.form.get("name")
@@ -68,6 +74,8 @@ def products_update(type,id):
         item.description=request.form.get("description")
         if(request.form.get("cartegory") != None):
             item.cartegory=request.form.get("cartegory")
+        if(request.form.get("vat") != None):
+            item.vat=request.form.get("vat")
         active=request.form.get("active")
         if active=='on':
             item.active=True

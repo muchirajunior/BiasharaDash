@@ -1,5 +1,6 @@
 # Biashara Dash
 A monolith dashboard 
+- reduce the item price while ordering to give discount
 
 ### user roles
 - account user roles

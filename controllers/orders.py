@@ -4,6 +4,7 @@ from flask_login import current_user, login_required
 from models.order import Order,db
 from models.order_items import OrderItem
 from models.item import Item
+from models.business import Business
 
 
 orders=Blueprint("orders",__name__,url_prefix="/orders",template_folder="../templates/orders")
@@ -41,6 +42,8 @@ def post_order_api():
         address=request.json.get('address')
         delivery_date=request.json.get('delivery_date')
         items=request.json.get('items')
+        if delivery_date == '':
+            delivery_date=None
         if (items != None):
             order:Order = Order(customer,contact,address,0,delivery_date,business_id)
             db.session.add(order)
@@ -67,16 +70,25 @@ def post_order_api():
 @orders.route("/add",methods=['POST','GET'])
 @login_required
 def orders_add_route():
+    business:Business=Business.query.get(current_user.business_id)
+    date=datetime.today().replace(minute=0,hour=0,microsecond=0)
+    count=Order.query.filter(Order.business_id==current_user.business_id,Order.created_at>=date).count()
+    print(count)
+    if count >= business.max_orders:
+        flash('you have reached the maximum number of orders for today. upgrade for to increase your limit!')
+        return redirect(request.referrer)
     if request.method == 'POST':
         customer=request.form.get('customer')
         contact=request.form.get('contact')
         address=request.form.get('address')
         delivery_date=request.form.get('delivery_date')
-        if delivery_date != None and delivery_date != '':
+        if not(delivery_date == None or delivery_date == ''):
             if ( datetime.strptime(delivery_date,'%Y-%m-%d') < datetime.now()):
                 flash("delivery date given is passed ! we have set it to null please open the order and  update")
                 delivery_date=None
-
+        else:
+            delivery_date=None
+        business.today_orders=count
         db.session.add(Order(customer,contact,address,0,delivery_date,current_user.business_id))
         db.session.commit()
     return redirect('/orders')
@@ -84,7 +96,7 @@ def orders_add_route():
 @orders.route("/<id>",methods=['POST','GET'])
 @login_required
 def order_route(id):
-    order= Order.query.filter(Order.id==id,Order.sold ==False,Order.business_id==current_user.business_id).first()
+    order:Order= Order.query.filter(Order.id==id,Order.sold ==False,Order.business_id==current_user.business_id).first()
     if order == None:
         return redirect('/orders')
     
@@ -93,10 +105,16 @@ def order_route(id):
         quantity=request.form.get('quantity')
         price=request.form.get('price')
         item_id=request.form.get('item_id')
-        db.session.add(OrderItem(name,price,quantity,item_id,order.id))
+        vat=float(request.form.get('vat'))
+        print(vat)
+        if vat != 0:
+            vat=(vat*float(price))/100
+        db.session.add(OrderItem(name,price,quantity,item_id,vat=vat,order_id=order.id))
         order.total+=float(price)*int(quantity)
+        order.vat+=vat*int(quantity)
         order.updated_at=datetime.now()
         db.session.commit()
+        return redirect(request.referrer)
     search=request.args.get('search')
     if search==None:
         search=''
@@ -115,6 +133,7 @@ def remove_item_route(id,itemid):
     if item ==None:
         return redirect('/orders')
     order.total-=item.price*item.quantity
+    order.vat-=item.vat*item.quantity
     order.updated_at=datetime.now()
     db.session.delete(item)
     db.session.commit()
