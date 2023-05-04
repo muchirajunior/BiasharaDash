@@ -96,25 +96,30 @@ def orders_add_route():
 @orders.route("/<id>",methods=['POST','GET'])
 @login_required
 def order_route(id):
+ 
     order:Order= Order.query.filter(Order.id==id,Order.sold ==False,Order.business_id==current_user.business_id).first()
     if order == None:
         return redirect('/orders')
     
     if request.method == 'POST':
-        name=request.form.get('name')
-        quantity=request.form.get('quantity')
-        price=request.form.get('price')
-        item_id=request.form.get('item_id')
-        vat=float(request.form.get('vat'))
-        print(vat)
-        if vat != 0:
-            vat=(vat*float(price))/100
-        db.session.add(OrderItem(name,price,quantity,item_id,vat=vat,order_id=order.id))
-        order.total+=float(price)*int(quantity)
-        order.vat+=vat*int(quantity)
-        order.updated_at=datetime.now()
-        db.session.commit()
-        return redirect(request.referrer)
+        try:
+            name=request.form.get('name')
+            quantity=request.form.get('quantity')
+            price=request.form.get('price')
+            item_id=request.form.get('item_id')
+            vat=float(request.form.get('vat'))
+            print(vat)
+            if vat != 0:
+                vat=(vat*float(price))/100
+            db.session.add(OrderItem(name,price,quantity,item_id,vat=vat,order_id=order.id))
+            order.total+=float(price)*int(quantity)
+            order.vat+=vat*int(quantity)
+            order.updated_at=datetime.now()
+            db.session.commit()
+            return redirect(request.referrer)
+        except Exception as error:
+            print(str(error.args))
+            flash("an error occurred try update the item details !")
     search=request.args.get('search')
     if search==None:
         search=''
@@ -126,18 +131,21 @@ def order_route(id):
 @orders.route("/<id>/<itemid>")
 @login_required
 def remove_item_route(id,itemid):
-    order:Order= Order.query.filter(Order.id==id,Order.sold ==False,Order.business_id==current_user.business_id).first()
-    if order == None:
-        return redirect('/orders')
-    item:OrderItem=OrderItem.query.filter_by(id=itemid).first()
-    if item ==None:
-        return redirect('/orders')
-    order.total-=item.price*item.quantity
-    order.vat-=item.vat*item.quantity
-    order.updated_at=datetime.now()
-    db.session.delete(item)
-    db.session.commit()
-
+    try:
+        order:Order= Order.query.filter(Order.id==id,Order.sold ==False,Order.business_id==current_user.business_id).first()
+        if order == None:
+            return redirect('/orders')
+        item:OrderItem=OrderItem.query.filter_by(id=itemid).first()
+        if item ==None:
+            return redirect('/orders')
+        order.total-=item.price*item.quantity
+        order.vat-=item.vat*item.quantity
+        order.updated_at=datetime.now()
+        db.session.delete(item)
+        db.session.commit()
+    except Exception as error:
+        print(str(error.args))
+        flash("an error occurred during the process !!")
     return redirect(request.referrer)
 
 @orders.route("/<id>/update",methods=['POST','GET'])
@@ -159,7 +167,8 @@ def order_update_route(id):
                     order.delivery_date=delivery_date
         
             db.session.commit()
-    except:
+    except Exception as error:
+        print(error.args)
         flash('error updating order')    
     
     return redirect(f"/orders/{id}")
