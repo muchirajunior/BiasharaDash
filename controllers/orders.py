@@ -13,7 +13,6 @@ orders=Blueprint("orders",__name__,url_prefix="/orders",template_folder="../temp
 @login_required
 def orders_route():
     date=datetime.today()
-    print(date)
     if request.method == 'POST':
         date=datetime.strptime(request.form.get('date'),"%Y-%m-%d")
     
@@ -31,7 +30,7 @@ def orders_route():
         Order.customer.like(f"%{search}%")
         ).order_by(Order.created_at.desc()).all()
     
-    return render_template("orders.html",orders=business_orders,date=date)
+    return render_template("orders.html",orders=business_orders,date=date.date())
 
 @orders.route("/create",methods=['POST'])
 def post_order_api():
@@ -73,7 +72,6 @@ def orders_add_route():
     business:Business=Business.query.get(current_user.business_id)
     date=datetime.today().replace(minute=0,hour=0,microsecond=0)
     count=Order.query.filter(Order.business_id==current_user.business_id,Order.created_at>=date).count()
-    print(count)
     if count >= business.max_orders:
         flash('you have reached the maximum number of orders for today. upgrade for to increase your limit!')
         return redirect(request.referrer)
@@ -88,7 +86,7 @@ def orders_add_route():
                 delivery_date=None
         else:
             delivery_date=None
-        business.today_orders=count
+        business.today_orders=count+1
         db.session.add(Order(customer,contact,address,0,delivery_date,current_user.business_id))
         db.session.commit()
     return redirect('/orders')
@@ -219,7 +217,7 @@ def sales_route():
         Order.customer.like(f"%{search}%")
         ).order_by(Order.created_at.desc()).all()
     
-    return render_template("sales.html",orders=business_sales,date=date)
+    return render_template("sales.html",orders=business_sales,date=date.date())
 
 @orders.route("/sales/<id>")
 @login_required

@@ -28,14 +28,12 @@ def index_route():
 @dashboard.route("/<type>",methods=["POST","GET"])
 @login_required
 def items_route(type):
-    print(type)
     if not (type == 'product' or type == 'service'):  
         return redirect('/')
 
     if request.method=="POST":
         business:Business=Business.query.get(current_user.business_id)
         count=Item.query.filter(Item.business_id==current_user.business_id).count()
-        print(count)
         if count >= business.max_items:
             flash('you have reached the maximum Items you can upload. upgrade for to increase your limit!')
             return redirect(request.referrer)
@@ -47,7 +45,7 @@ def items_route(type):
         photo=request.form.get("photo")
 
         db.session.add(Item(name,price,description,stock,photo,type,cartegory,current_user.business_id))
-        business.items_count=count
+        business.items_count=count+1
         db.session.commit()
 
         return  redirect(f"/{type}")
