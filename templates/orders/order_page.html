@@ -16,7 +16,7 @@
                 <label for="">Customer address</label>
                 <input type="text" class="form-control " name="address" value="{{order.address}}" maxlength="30" minlength="4">
                 <label for="">Delivery date</label>
-                <input type="date" class="form-control " name="delivery_date" value="{{order.delivery_date}}" maxlength="30" minlength="4" >
+                <input type="date" class="form-control " name="delivery_date"  {% if order.delivery_date != None %}  value="{{order.delivery_date.date()}}" {% endif %} maxlength="30" minlength="4" >
             </div>
             <div class="modal-footer justify-content-between">
                 <button  class="btn btn-dark " type="button" data-bs-dismiss="modal">cancel</button>
@@ -28,9 +28,9 @@
 </div>
 
 <!-- page body -->
-<div class="card p-2">
+<div class="card p-2 bg-light">
     <div class="fw-bold ms-3">Order details page</div>
-    <div class="card shadow border-secondary-subtle m-2 p-2">
+    <div class="card shadow border-secondary-subtle mb-3 p-2">
         <div class="fw-bold fs-3  d-flex flex -row justify-content-between flex-wrap mb-2">
             <span>{{order.customer}}</span>
             <span class="bg-primary-subtle p-2 rounded text-muted">Total: {{order.total}} </span>
@@ -52,7 +52,7 @@
     </div>
     {% endfor %}
 
-    <table class="table shadow rounded me-3">
+    <table class="table shadow me-3">
         <thead>
             <tr>
                 <th>#id</th>
@@ -85,7 +85,7 @@
                 <td>{{item.price}}</td>
                 <td>{{item.quantity}}</td>
                 <td>{{item.vat}}</td>
-                <td class="row">
+                <td class="">
                     <button class="btn btn-danger " data-bs-target="#deleteItemDialog-{{item.id}}" data-bs-toggle="modal"> remove </button>
                 </td>
             </tr>

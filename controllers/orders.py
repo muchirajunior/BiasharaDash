@@ -28,7 +28,7 @@ def orders_route():
         Order.created_at <= end,
         Order.created_at >=start,
         Order.customer.like(f"%{search}%")
-        ).order_by(Order.created_at.desc()).all()
+        ).order_by(Order.id.desc()).all()
     
     return render_template("orders.html",orders=business_orders,date=date.date())
 
@@ -81,7 +81,7 @@ def orders_add_route():
         address=request.form.get('address')
         delivery_date=request.form.get('delivery_date')
         if not(delivery_date == None or delivery_date == ''):
-            if ( datetime.strptime(delivery_date,'%Y-%m-%d') < datetime.now()):
+            if ( datetime.strptime(delivery_date,'%Y-%m-%d') < datetime.now().date()):
                 flash("delivery date given is passed ! we have set it to null please open the order and  update")
                 delivery_date=None
         else:
@@ -159,8 +159,8 @@ def order_update_route(id):
             order.address=request.form.get('address')
             delivery_date=request.form.get('delivery_date')
             if delivery_date != None and delivery_date != '':
-                if ( datetime.strptime(delivery_date,'%Y-%m-%d') < datetime.now()):
-                    flash("delivery date given is passed !")
+                if datetime.strptime(delivery_date,'%Y-%m-%d').date() < datetime.now().date():
+                    flash("delivery date given is past today!")
                 else:
                     order.delivery_date=delivery_date
         
@@ -215,7 +215,7 @@ def sales_route():
         Order.created_at <= end,
         Order.created_at >=start,
         Order.customer.like(f"%{search}%")
-        ).order_by(Order.created_at.desc()).all()
+        ).order_by(Order.id.asc()).all()
     
     return render_template("sales.html",orders=business_sales,date=date.date())
 

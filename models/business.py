@@ -18,9 +18,11 @@ class Business(db.Model):
     subscription_type=db.Column(db.String(10),default='standard') #basic/standard/premium
     active=db.Column(db.Boolean,default=True)
     items_cartegories=db.Column(JSON,default=[])
-    items_count=db.Column(db.Integer)
-    today_orders=db.Column(db.Integer) #total orders today
-    max_items=db.Column(db.Integer,default=50) #maximumn number of items the business can have
+    items_count=db.Column(db.Integer,default=0)
+    today_orders=db.Column(db.Integer,default=0) #total orders today
+    max_items=db.Column(db.Integer,default=50) #maximumn number of items the business can 
+    customers_count=db.Column(db.Integer,default=0)
+    max_customers=db.Column(db.Integer,default=100)
     max_orders=db.Column(db.Integer,default=100) #maximum number of order per day
     created_at=db.Column(db.DateTime,default=datetime.now())
     updated_at=db.Column(db.DateTime)

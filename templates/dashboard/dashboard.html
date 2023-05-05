@@ -31,7 +31,7 @@
                     <input class="form-control shadow border-secondary-subtle w-50 mx-auto rounded-pill" name="search" id="search" type="search" placeholder="Search" maxlength="20" aria-label="Search"> 
                  </form>
                 <div class="d-flex flex-column ms-2 me-2 justify-content-center align-items-center">
-                    <span class="fw-bold fs-5">{{current_user.name}}</span>
+                    <span class="fw-bold fs-5 text-nowrap ">{{current_user.name}}</span>
                     <span class="fw-bold text-muted fs-6">{{current_user.email}}</span>
                 </div>
                 <img class="img rounded-circle m-0" src="{{url_for('static',filename='/images/profile1.jpg')}}" alt="business profile" width="60px" height="60px" srcset="">

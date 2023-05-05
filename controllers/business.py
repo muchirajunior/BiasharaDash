@@ -55,6 +55,7 @@ def profile():
             filename= upload_file(request.files['photo'])
             if filename != None:
                 business.photo=filename
+        business.updated_at=datetime.now()
         db.session.commit()
     
     return redirect(request.referrer)

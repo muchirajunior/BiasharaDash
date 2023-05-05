@@ -25,6 +25,7 @@ def index_route():
     business_cartegories=Cartegory.query.all()
     return render_template("business_dash.html",business_cartegories=business_cartegories)
 
+#type is items route for either product/service
 @dashboard.route("/<type>",methods=["POST","GET"])
 @login_required
 def items_route(type):
@@ -52,12 +53,12 @@ def items_route(type):
 
     
     cartegories=Business.query.filter_by(id=current_user.business_id).first().items_cartegories
+    search=''
     if (request.args.get('search') != None):
         search=request.args.get('search')
-        items= Item.query.filter(Item.business_id==current_user.business_id, Item.type==type,Item.name.like(f"%{search}%")).all()
-    else:
-        items= Item.query.filter(Item.business_id==current_user.business_id, Item.type==type).all()
-       
+    items= Item.query.filter(Item.business_id==current_user.business_id, 
+                            Item.type==type,Item.name.like(f"%{search}%")).order_by(Item.id.asc()).all()
+
     return render_template("items.html",items=items,cartegories=cartegories,type=type)
 
 @dashboard.route("/<type>/<id>",methods=["POST"])
@@ -120,23 +121,30 @@ def item_cartegories_route():
 @login_required
 def customers_route():
     if request.method =="POST":
+        business:Business=Business.query.get(current_user.business_id)
+        count=Customer.query.filter_by(business_id=current_user.business_id).count()
+        if count >= business.max_customers:
+            flash('you have reached the maximum customers you can upload. upgrade for to increase your limit!')
+            return redirect(request.referrer)
         name=request.form.get('name')
         phone=request.form.get('phone')
         email=request.form.get('email')
         address=request.form.get('address')
         db.session.add(Customer(name,address,phone,email,current_user.business_id))
+        business.customers_count=count+1
         db.session.commit()
 
         return redirect('/customers')
     search=''
     if (request.args.get('search') != None):
         search=request.args.get('search')
-    customers = Customer.query.filter(Customer.business_id==current_user.business_id,Customer.name.like(f"%{search}%")).all()
+    customers = Customer.query.filter(Customer.business_id==current_user.business_id,Customer.name.like(f"%{search}%")
+                ).order_by(Customer.id.asc()).all()
     return render_template('customers.html',customers=customers)
 
 @dashboard.route("/customers/<id>",methods=['POST','GET'])
 @login_required
-def customer_route(id):
+def customer_update_route(id):
     customer = Customer.query.filter_by(id=id,business_id=current_user.business_id).first()
     if customer == None:
         return redirect(request.referrer)

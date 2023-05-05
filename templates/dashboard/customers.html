@@ -36,6 +36,13 @@
     </div>
   </div>
 
+  {% for message in get_flashed_messages() %}
+  <div class="alert alert-danger alert-dismissible fade show">
+      {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  {% endfor %}
+
   <table class="table">
     <thead class="">
       <tr class="bg-light m-2">
@@ -69,7 +76,7 @@
                
             </div>
             <div class="modal-footer justify-content-between">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">cancel</button>
+              <button type="button" class="btn btn-dark" data-bs-dismiss="modal">cancel</button>
               <button type="submit" class="btn btn-primary">submit</button>
             </div>
           </form>
@@ -111,15 +118,14 @@
       </div>
       
       <!-- item row in the table -->
-      <tr class="m-2 shadow rounded border-secondary-subtle" data-bs-target="#customerModal-{{customer.id}}"
-        data-bs-toggle="modal">
+      <tr class="m-2 shadow rounded border-secondary-subtle">
         <th scope="row">{{customer.id}}</th>
         <td>{{customer.name}}</td>
         <td>{{customer.phone}}</td>
         <td>{{customer.email}}</td>
         <td>{{customer.address}}</td>
         <td class="d-flex flex-row " role="group" >
-          <button class="btn btn-primary me-1">update</button>
+          <button class="btn btn-primary me-1"  data-bs-target="#customerModal-{{customer.id}}" data-bs-toggle="modal">update</button>
           <a class="btn btn-warning me-1" href="/orders?search={{customer.name}}">orders</a>
           <button class="btn btn-success me-1" data-bs-toggle="modal" data-bs-target="#createOrderDialog-{{customer.id}}">new order</button>
           <button  class="btn btn-danger"  data-bs-target="#deleteDialog-{{customer.id}}" data-bs-toggle="modal">delete </button>
