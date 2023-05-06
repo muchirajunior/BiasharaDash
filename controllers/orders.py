@@ -106,12 +106,11 @@ def order_route(id):
             price=request.form.get('price')
             item_id=request.form.get('item_id')
             vat=float(request.form.get('vat'))
-            print(vat)
             if vat != 0:
                 vat=(vat*float(price))/100
             db.session.add(OrderItem(name,price,quantity,item_id,vat=vat,order_id=order.id))
             order.total+=float(price)*int(quantity)
-            order.vat+=vat*int(quantity)
+            order.vat=round(order.vat+vat*int(quantity),2)
             order.updated_at=datetime.now()
             db.session.commit()
             return redirect(request.referrer)
@@ -122,7 +121,8 @@ def order_route(id):
     if search==None:
         search=''
 
-    items=Item.query.filter(Item.business_id==current_user.business_id,Item.active,Item.name.like(f"%{search}%")).all()
+    items=Item.query.filter(Item.business_id==current_user.business_id,Item.active,Item.name.like(f"%{search}%")
+                            ).order_by(Item.id.asc()).all()
     order_items=OrderItem.query.filter_by(order_id=order.id).all()
     return render_template("order_page.html",order=order,order_items=order_items,items=items,search=search)
 
@@ -137,7 +137,7 @@ def remove_item_route(id,itemid):
         if item ==None:
             return redirect('/orders')
         order.total-=item.price*item.quantity
-        order.vat-=item.vat*item.quantity
+        order.vat=round(order.vat-item.vat*item.quantity,2)
         order.updated_at=datetime.now()
         db.session.delete(item)
         db.session.commit()
