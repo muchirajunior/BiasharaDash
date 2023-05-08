@@ -12,6 +12,8 @@ class Business(db.Model):
     cartegory=db.Column(db.String(100))
     phone=db.Column(db.String(20),unique=True)
     photo=db.Column(db.String(200))
+    about=db.Column(db.String(400))
+    notification=db.Column(db.String(100))
     pdf_menu=db.Column(db.String(200))
     website=db.Column(db.String(300))
     subscription=db.Column(db.Float,default=100)

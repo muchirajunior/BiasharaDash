@@ -27,7 +27,7 @@
               <input type="number" name="stock" class="form-control" required value="0" min="0" max="1000000">
             </div>
             <label for="">description</label>
-            <textarea type="text" name="description" class="form-control"></textarea>
+            <textarea type="text" name="description" class="form-control" maxlength="400"></textarea>
             <label for="">cartegory</label>
             <select name="cartegory" id="" class="form-select">
               <option value="" selected disabled>select cartegory</option>
@@ -91,7 +91,7 @@
                   <input type="number" name="stock" class="form-control" value="{{item.stock}}" min="0" max="1000000">
                 {% endif %}
                 <label for="">description</label>
-                <textarea type="text" name="description" class="form-control">{{item.description}}</textarea>
+                <textarea type="text" name="description" class="form-control" maxlength="400">{{item.description}}</textarea>
                 <label for="" class="text-muted mt-2">is active</label>
                 <input type="checkbox" class="m-3" name="active" {% if item.active %} checked="{{item.value}}" {% endif
                   %} id="">

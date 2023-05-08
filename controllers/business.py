@@ -45,6 +45,8 @@ def profile():
         business.address=request.form.get('address')
         business.website=request.form.get('website')
         business.phone=request.form.get('phone')
+        business.about=request.form.get('about')
+        business.notification=request.form.get('notification')
         if not(request.form.get('cartegory') == None or request.form.get('cartegory') ==''):
             business.cartegory=request.form.get('cartegory')
         if (request.files['pdf_menu'] != None):

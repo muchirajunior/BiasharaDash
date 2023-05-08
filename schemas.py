@@ -10,7 +10,7 @@ itemsSchema=ItemSchema(many=True)
 class BusinessSchema(ma.Schema):
     items=ma.Nested(ItemSchema, many=True)
     class Meta:
-        fields=('id','name','username','address','cartegory','phone','photo','pdf_menu','site','active','subscription_type','items_cartegories','items')
+        fields=('id','name','username','address','cartegory','phone','photo','pdf_menu','site','notification','about','active','subscription_type','items_cartegories','items')
 
 businessSchema=BusinessSchema()
 businessesSchema=BusinessSchema(many=True)

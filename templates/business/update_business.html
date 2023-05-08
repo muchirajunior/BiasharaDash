@@ -1,5 +1,5 @@
 <div class="modal fade" id="updateBusinessModal" data-bs-backdrop="static">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-dialog  modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header fw-bold">
                 Update Business Profile
@@ -24,6 +24,13 @@
 
                     <label for="">website</label>
                     <input type="text" class="form-control" name="website" value="{{businessData().website}}" minlength="4"  maxlength="100">
+
+                    <label for="">notification</label>
+                    <input type="text" class="form-control" name="notification" value="{{businessData().notification}}" minlength="4" maxlength="200">
+
+                    <label for="">business info</label>
+                    <textarea type="text" class="form-control" name="about"  maxlength="400" rows="3" >{{businessData().about}}</textarea>
+
 
                     <label for="">business cartegory</label>
                     <select name="cartegory" id="" class="form-select">
