@@ -81,7 +81,7 @@ def orders_add_route():
         address=request.form.get('address')
         delivery_date=request.form.get('delivery_date')
         if not(delivery_date == None or delivery_date == ''):
-            if ( datetime.strptime(delivery_date,'%Y-%m-%d') < datetime.now().date()):
+            if ( datetime.strptime(delivery_date,'%Y-%m-%d') < datetime.now()):
                 flash("delivery date given is passed ! we have set it to null please open the order and  update")
                 delivery_date=None
         else:
