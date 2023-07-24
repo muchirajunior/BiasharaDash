@@ -1,4 +1,3 @@
-#type: ignore
 from datetime import timedelta
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
