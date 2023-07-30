@@ -14,6 +14,9 @@ from models.cartegory import Cartegory
 from models.message import Message
 from models.customer import Customer
 from models.traffic import Traffic
+from models.document import Document
+from models.document_item import DocumentItem
+from models.object_type import ObjectType
 from utils import businessData
 
 #sets business data to global reach by jinja2 in all files
@@ -55,6 +58,7 @@ class AdminModelView(ModelView):
     form_excluded_columns=['password',"orders",'items','customers','traffic']
     column_searchable_list = ('')
     edit_modal=True
+    details_modal=True
     def is_accessible(self):
         return current_user.is_authenticated and current_user.role=="admin"
                 
@@ -69,11 +73,14 @@ admin=Admin(app,template_mode="bootstrap4")
 admin.add_view( AdminModelView(User, db.session)) 
 admin.add_view( AdminModelView(Business, db.session)) 
 admin.add_view( AdminModelView(Item, db.session))
+admin.add_view( AdminModelView(Customer, db.session))
 admin.add_view( AdminModelView(Order, db.session))
 admin.add_view( AdminModelView(OrderItem, db.session))
+admin.add_view( AdminModelView(Document, db.session))
+admin.add_view( AdminModelView(DocumentItem, db.session))
+admin.add_view( AdminModelView(ObjectType, db.session))
 admin.add_view( AdminModelView(Cartegory, db.session))
 admin.add_view( AdminModelView(Message, db.session))
-admin.add_view( AdminModelView(Customer, db.session))
 admin.add_view( AdminModelView(Traffic, db.session))
 
 if __name__=="__main__":

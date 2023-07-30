@@ -9,7 +9,7 @@ class DocumentItem(db.Model):
     vat=db.Column(db.Float,default=0)
     discount=db.Column(db.Float,default=0)
     item_id=db.Column(db.Integer)
-    document_id=db.Column(db.Integer,db.ForeignKey("Document.id"),nullable=False)
+    document_id=db.Column(db.Integer,db.ForeignKey("documents.id"),nullable=False)
 
     def __init__(self,name,price,quantity,item_id,vat,discount,order_id):
         self.name=name

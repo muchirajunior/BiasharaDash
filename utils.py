@@ -1,14 +1,16 @@
-from flask import redirect,request,session
+from flask import redirect,request,session,flash
 from flask_login import login_required,current_user
 from models.business import Business
 from werkzeug.utils import secure_filename
 from shortuuid import uuid
 from PIL import Image
+
 def custom_login_required(role):
     def wrapper(fn):
         @login_required
         def decorated_view(*args, **kwargs):
             if not (current_user.role == role or current_user.role == 'admin'):
+                flash('you are not authorized to view the resource')
                 return redirect(request.referrer)
             return fn(*args, **kwargs)
         return decorated_view

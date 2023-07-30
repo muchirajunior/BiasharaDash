@@ -59,7 +59,7 @@ def items_route(type):
     items= Item.query.filter(Item.business_id==current_user.business_id, 
                             Item.type==type,Item.name.like(f"%{search}%")).order_by(Item.id.asc()).all()
 
-    return render_template("items.html",items=items,cartegories=cartegories,type=type)
+    return render_template("itemsy.html",items=items,cartegories=cartegories,type=type)
 
 @dashboard.route("/<type>/<id>",methods=["POST"])
 @login_required
